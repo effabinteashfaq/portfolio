@@ -5,7 +5,7 @@ Rules:
 - One-liners: witty, short descriptions everywhere needed (Effa's call, 22 Nov). Approved lines are recorded under each section.
 
 ## Room intros — approved
-- **Study:** Late nights, a lantern, and papers that took longer than planned.
+- **Study:** Late nights, a laptop, and papers that took longer than planned.
 - **Veranda:** Where the work happens with other people: jobs, teams, the society, and the odd paper garland.
 - **Corridor:** Certificates and CVE credits, framed on the wall. Hover a frame and the big mirror tells its story.
 - **Workshop:** Where the tools get built, between parathas and the odd painting left half finished.

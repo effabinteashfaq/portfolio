@@ -1,3 +1,14 @@
+/* Urdu: a small subset of Noto Nastaliq Urdu with only the letters the site
+   uses (built by scripts/subset-urdu.mjs; re-run it after adding Urdu text). */
+@font-face {
+  font-family: 'Noto Nastaliq Urdu';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/noto-nastaliq-urdu-subset.woff2') format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200D, U+FB50-FDFF, U+FE70-FEFF;
+}
+
 /* ------------------------------------------------------------------
    Palette: from Effa's mountain photo, as used in the Journey mockup.
    Change a colour here and it changes everywhere.

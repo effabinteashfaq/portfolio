@@ -10,7 +10,9 @@
     "prebuild": "npm run prepare-assets",
     "build": "astro build",
     "preview": "astro preview",
-    "fresh": "astro dev stop; rm -rf .astro node_modules/.astro node_modules/.vite dist && npm run dev -- --host --port 4321"
+    "fresh": "astro dev stop; rm -rf .astro node_modules/.astro node_modules/.vite dist && npm run dev -- --host --port 4321",
+    "optimise-svg": "svgo -r -f src/scenes --config svgo.config.mjs",
+    "subset-urdu": "node scripts/subset-urdu.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.10",
@@ -24,6 +26,8 @@
   },
   "devDependencies": {
     "axe-core": "^4.14.1",
-    "mermaid": "^12.3.0"
+    "mermaid": "^12.3.0",
+    "subset-font": "^2.9.0",
+    "svgo": "^4.1.0"
   }
 }
