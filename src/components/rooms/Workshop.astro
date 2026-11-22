@@ -73,12 +73,14 @@ const benchAccents = ['#2F5D50', '#3B4F7D', '#C0623A', '#C8961E'];
         return (
           <li>
             <Tag class="piece" href={p.data.link} rel={p.data.link ? 'noopener' : undefined} style={`--accent:${accent}`}>
-              <span class="piece__date">{p.data.date}</span>
               <h4 class="piece__name">{p.data.name}</h4>
-              <p class="piece__line">{p.data.line}</p>
-              <ul class="piece__stack" aria-label="Built with">
-                {p.data.stack?.split(',').map((t) => <li>{t.trim()}</li>)}
-              </ul>
+              <div class="piece__body">
+                <p class="piece__line">{p.data.line}</p>
+                <ul class="piece__chips" aria-label="Tools and date">
+                  {p.data.stack?.split(',').map((t) => <li class="chip chip--tool">{t.trim()}</li>)}
+                  {p.data.date && <li class="chip chip--date">{p.data.date}</li>}
+                </ul>
+              </div>
             </Tag>
           </li>
         );
@@ -169,25 +171,24 @@ const benchAccents = ['#2F5D50', '#3B4F7D', '#C0623A', '#C8961E'];
   .tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
   .tags li { font-size: 14px; font-weight: 500; background: var(--tag-bg); color: var(--tag-ink); padding: 6px 12px; border-radius: 6px; }
 
-  .pieces { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 22px; }
+  .pieces { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
   .piece {
-    height: 100%;
-    display: flex; flex-direction: column; gap: 8px;
-    padding: 24px 26px;
-    border-radius: 18px;
-    border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
-    border-top: 6px solid var(--accent);
-    background: color-mix(in srgb, var(--accent) 10%, #FBF7EE);
+    display: flex; flex-wrap: wrap; align-items: baseline;
+    gap: 10px 24px;
+    padding: 22px 0;
+    border-top: 1px solid var(--paper-line);
     color: var(--ink);
     text-decoration: none;
   }
-  a.piece:hover .piece__name { text-decoration: underline; }
-  .piece__date { font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: color-mix(in srgb, var(--accent) 70%, #1F2A44); }
-  .piece__name { font-size: 30px; line-height: 1.1; }
+  a.piece:hover .piece__name { color: var(--pine); text-decoration: underline; }
+  .piece__name { flex: 0 1 300px; font-size: 28px; line-height: 1.15; }
+  .piece__body { flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
   .piece__line { margin: 0; color: var(--ink-soft); }
-  .piece__stack { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-  /* darkened a little so white text stays readable (contrast 4.5:1+) */
-  .piece__stack li { font-size: 13px; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 65%, #1F2A44); color: #FFFFFF; }
+  .piece__chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { font-size: 13px; font-weight: 700; padding: 5px 12px; border-radius: 999px; }
+  /* tool bubbles in the project's colour, darkened a little so white text stays readable */
+  .chip--tool { background: color-mix(in srgb, var(--accent) 65%, #1F2A44); color: #FFFFFF; }
+  .chip--date { background: #FBE7A8; color: #6B4A12; }
 
   .khaaka {
     background: #FBF7EE;
