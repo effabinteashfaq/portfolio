@@ -1,0 +1,42 @@
+---
+// The doorway between two rooms: a colour fade, the patchwork strip and
+// an "onward to" line. The chinar leaf breeze is added here in step 4.
+import Patchwork from './Patchwork.astro';
+
+interface Props {
+  from: string;   // background colour of the room above
+  to: string;     // background colour of the room below
+  urdu: string;   // Urdu name of the next room
+  next: string;   // English name of the next room, e.g. "the Study"
+}
+const { from, to, urdu, next } = Astro.props;
+---
+<div class="threshold" aria-hidden="true" style={`--from:${from};--to:${to}`}>
+  <Patchwork />
+  <span class="threshold__line">onward to <span class="urdu" lang="ur" dir="rtl">{urdu}</span> · {next}</span>
+</div>
+
+<style>
+  .threshold {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: linear-gradient(var(--from), var(--to));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .threshold__line {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 18px;
+    /* a small paper tag keeps the text readable over the colour fade */
+    color: var(--ink);
+    background: rgba(246, 240, 228, 0.92);
+    padding: 2px 16px;
+    border-radius: 999px;
+  }
+  .threshold__line .urdu { font-size: 0.95em; line-height: 1; }
+</style>

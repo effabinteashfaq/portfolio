@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.vercel/
+.env
+.env.*
+.DS_Store
+# generated from assets/ by scripts/prepare-assets.mjs
+public/cv/

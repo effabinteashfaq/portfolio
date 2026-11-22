@@ -1,0 +1,23 @@
+{
+  "name": "effa-portfolio",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "prepare-assets": "node scripts/prepare-assets.mjs",
+    "predev": "npm run prepare-assets",
+    "dev": "astro dev",
+    "prebuild": "npm run prepare-assets",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.3.0",
+    "@fontsource/karla": "^5.3.0",
+    "@fontsource/noto-nastaliq-urdu": "^5.3.0",
+    "astro": "7.4.1"
+  },
+  "engines": {
+    "node": ">=22.22.0"
+  }
+}

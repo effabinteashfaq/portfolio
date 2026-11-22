@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 300" role="img" aria-label="Postcard illustration of the Military College of Signals: a domed brick building under an overcast golden sky, with the yellow MCS gate, palm trees and cypresses in front">
+<defs>
+<linearGradient id="mcsky" x1="0" y1="0" x2="0.3" y2="1"><stop offset="0" stop-color="#6E82A0"/><stop offset="0.55" stop-color="#B9B4B4"/><stop offset="1" stop-color="#F0C77E"/></linearGradient>
+<clipPath id="mcclip"><rect x="0" y="0" width="420" height="300" rx="4"/></clipPath>
+</defs>
+<g clip-path="url(#mcclip)">
+<!-- sky -->
+<rect width="420" height="300" fill="url(#mcsky)"/>
+<ellipse cx="360" cy="200" rx="120" ry="60" fill="#FAD58C" opacity="0.6"/>
+<rect x="20" y="34" width="150" height="10" rx="5" fill="#E7E2DE" opacity="0.5"/>
+<rect x="200" y="22" width="180" height="10" rx="5" fill="#E7E2DE" opacity="0.5"/>
+<rect x="60" y="62" width="110" height="10" rx="5" fill="#E7E2DE" opacity="0.45"/>
+<rect x="280" y="54" width="120" height="10" rx="5" fill="#E7E2DE" opacity="0.45"/>
+<rect x="0" y="92" width="80" height="10" rx="5" fill="#E7E2DE" opacity="0.4"/>
+
+<!-- dome + flag -->
+<path d="M262 64 V40" stroke="#4A4A48" stroke-width="2"/>
+<path d="M263 40 H281 V51 H263 Z" fill="#2F6B3F"/><path d="M263 40 H268 V51 H263 Z" fill="#FFFFFF"/>
+<path d="M232 104 A42 34 0 0 1 316 104 Z" fill="#8E928D"/>
+<path d="M246 104 A28 34 0 0 1 274 70 M302 104 A28 34 0 0 0 274 70 M274 70 V104" stroke="#73776F" stroke-width="2" fill="none"/>
+<path d="M240 90 H308" stroke="#73776F" stroke-width="1.5"/>
+<rect x="228" y="102" width="92" height="8" fill="#9C6A4E"/>
+
+<!-- upper glass storey -->
+<rect x="128" y="110" width="292" height="22" fill="#8C8A80"/>
+<path d="M128 116 H420" stroke="#A3A196" stroke-width="2"/>
+<rect x="124" y="106" width="300" height="5" fill="#A9765A"/>
+
+<!-- main brick block -->
+<rect x="128" y="132" width="292" height="90" fill="#A8634A"/>
+<g fill="#6B3D30">
+<rect x="140" y="142" width="7" height="68"/><rect x="156" y="142" width="7" height="68"/><rect x="172" y="142" width="7" height="68"/><rect x="188" y="142" width="7" height="68"/><rect x="204" y="142" width="7" height="68"/><rect x="220" y="142" width="7" height="68"/>
+<rect x="320" y="142" width="7" height="68"/><rect x="336" y="142" width="7" height="68"/><rect x="352" y="142" width="7" height="68"/><rect x="368" y="142" width="7" height="68"/><rect x="384" y="142" width="7" height="68"/><rect x="400" y="142" width="7" height="68"/>
+</g>
+<path d="M128 176 H240 M308 176 H420" stroke="#94553F" stroke-width="2"/>
+
+<!-- side tower with small dome -->
+<rect x="112" y="96" width="30" height="126" fill="#B5735A"/>
+<path d="M112 96 A15 8 0 0 1 142 96 Z" fill="#8E928D"/>
+<rect x="108" y="94" width="38" height="5" fill="#C98D70"/>
+<rect x="122" y="112" width="10" height="96" fill="#7A4637"/>
+
+<!-- central arched entrance -->
+<rect x="240" y="110" width="68" height="112" fill="#8A5240"/>
+<path d="M252 222 V160 A22 26 0 0 1 296 160 V222 Z" fill="#3A3F48"/>
+<path d="M252 160 A22 26 0 0 1 296 160" stroke="#E2C08A" stroke-width="3" fill="none"/>
+<path d="M274 136 V222 M252 186 H296" stroke="#596070" stroke-width="1.5"/>
+<text x="364" y="126" text-anchor="middle" font-family="Karla, sans-serif" font-weight="700" font-size="11" letter-spacing="2" fill="#F6EEDC">MCS · NUST</text>
+
+<!-- cypress row -->
+<g fill="#2F4A33">
+<path d="M150 222 C142 200 146 180 152 170 C158 180 162 200 154 222 Z"/>
+<path d="M176 222 C168 198 172 176 178 166 C184 176 188 198 180 222 Z"/>
+<path d="M204 222 C196 200 200 182 206 172 C212 182 216 200 208 222 Z"/>
+<path d="M330 222 C322 200 326 180 332 170 C338 180 342 200 334 222 Z"/>
+<path d="M358 222 C350 198 354 176 360 166 C366 176 370 198 362 222 Z"/>
+<path d="M388 222 C380 200 384 182 390 172 C396 182 400 200 392 222 Z"/>
+</g>
+
+<!-- golden lawn -->
+<path d="M0 222 H420 V300 H0 Z" fill="#C9A75E"/>
+<path d="M200 236 C260 230 340 232 420 238" stroke="#B8954E" stroke-width="3" fill="none"/>
+<path d="M240 262 C300 256 360 258 420 262" stroke="#B8954E" stroke-width="3" fill="none"/>
+
+<!-- MCS gate wall (foreground, left) -->
+<rect x="0" y="214" width="236" height="56" fill="#E2B85C"/>
+<rect x="0" y="214" width="236" height="6" fill="#C9973F"/>
+<g fill="#F3E3B8"><rect x="22" y="230" width="22" height="18" rx="2"/><rect x="62" y="230" width="22" height="18" rx="2"/></g>
+<g fill="#8C5B3B">
+<rect x="10" y="206" width="12" height="64"/><rect x="96" y="200" width="14" height="70"/><rect x="186" y="200" width="14" height="70"/><rect x="226" y="206" width="12" height="64"/>
+</g>
+<g fill="#A9744C"><rect x="8" y="202" width="16" height="6"/><rect x="94" y="196" width="18" height="6"/><rect x="184" y="196" width="18" height="6"/><rect x="224" y="202" width="16" height="6"/></g>
+<!-- gate bar -->
+<path d="M110 226 H186" stroke="#3B3B3B" stroke-width="4"/>
+<path d="M110 226 H186" stroke="#E9E4D8" stroke-width="4" stroke-dasharray="8 8"/>
+<!-- barbed wire coil on the wall -->
+<path d="M0 204 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0" stroke="#5A5F66" stroke-width="1.5" fill="none" transform="translate(110 -4)"/>
+
+<!-- MCS block letters -->
+<g>
+<rect x="120" y="238" width="18" height="30" fill="#1E2126"/><rect x="141" y="238" width="18" height="30" fill="#1E2126"/><rect x="162" y="238" width="18" height="30" fill="#1E2126"/>
+<text x="129" y="259" text-anchor="middle" font-family="Karla, sans-serif" font-weight="700" font-size="15" fill="#F6EEDC">M</text>
+<text x="150" y="259" text-anchor="middle" font-family="Karla, sans-serif" font-weight="700" font-size="15" fill="#F6EEDC">C</text>
+<text x="171" y="259" text-anchor="middle" font-family="Karla, sans-serif" font-weight="700" font-size="15" fill="#F6EEDC">S</text>
+</g>
+
+<!-- palm trees -->
+<g>
+<path d="M58 270 C60 230 56 200 62 168" stroke="#7A5A3A" stroke-width="6" fill="none" stroke-linecap="round"/>
+<g fill="#3E6B3A">
+<path d="M62 168 C44 160 30 166 20 178 C36 170 48 170 62 172 Z"/>
+<path d="M62 168 C78 156 96 160 104 172 C90 166 76 168 62 172 Z"/>
+<path d="M62 168 C54 150 40 146 30 150 C44 152 54 160 62 170 Z"/>
+<path d="M62 168 C70 148 86 144 96 148 C82 152 72 160 62 170 Z"/>
+<path d="M62 168 C62 150 68 140 76 136 C70 146 66 156 64 170 Z"/>
+</g>
+<path d="M210 270 C212 240 208 222 214 200" stroke="#7A5A3A" stroke-width="5" fill="none" stroke-linecap="round"/>
+<g fill="#4A7A44">
+<path d="M214 200 C200 194 188 198 182 208 C194 202 204 202 214 204 Z"/>
+<path d="M214 200 C228 192 242 194 248 204 C236 200 226 202 214 204 Z"/>
+<path d="M214 200 C208 186 196 182 188 186 C200 188 208 194 214 202 Z"/>
+<path d="M214 200 C222 186 234 182 242 186 C230 190 222 196 214 202 Z"/>
+</g>
+</g>
+
+<!-- lamp post -->
+<path d="M404 290 V214 Q404 206 396 206" stroke="#4A4A48" stroke-width="2.5" fill="none"/>
+<rect x="388" y="204" width="10" height="5" rx="2" fill="#4A4A48"/>
+<!-- road -->
+<path d="M0 270 H260 L300 300 H0 Z" fill="#9A9A94"/>
+<path d="M0 284 H270" stroke="#F3EEE2" stroke-width="3" stroke-dasharray="14 12"/>
+</g>
+</svg>

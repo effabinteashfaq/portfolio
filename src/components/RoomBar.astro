@@ -1,0 +1,161 @@
+---
+// Sticky top bar on every page: room links, current-room highlight, CV.
+import { rooms, site } from '../data/site.js';
+
+interface Props {
+  /** true on the home page (links jump within the page) */
+  home?: boolean;
+  /** room to highlight on pages other than home, e.g. "library" on a writeup */
+  current?: string;
+}
+const { home = false, current } = Astro.props;
+const prefix = home ? '' : '/';
+---
+<header class="room-bar">
+  <nav aria-label="Rooms" class="room-bar__inner">
+    <a class="room-bar__brand" href={`${prefix}#courtyard`}>
+      <span class="room-bar__first">Effa</span>
+      <span class="room-bar__last">binte Ashfaq</span>
+    </a>
+    <ul class="room-bar__rooms" data-room-links data-home={home ? 'true' : 'false'}>
+      {rooms.map((r) => (
+        <li>
+          <a
+            href={`${prefix}#${r.id}`}
+            data-room={r.id}
+            aria-current={current === r.id ? 'location' : undefined}
+          >{r.label}</a>
+        </li>
+      ))}
+    </ul>
+    <a class="room-bar__cv" href={site.cv} download>CV</a>
+  </nav>
+</header>
+
+<style>
+  .room-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(246, 240, 228, 0.94);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--paper-line);
+  }
+  .room-bar__inner {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 10px var(--gutter);
+    min-height: var(--bar-height);
+    display: flex;
+    align-items: center;
+    gap: 12px 16px;
+  }
+  .room-bar__brand {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--ink);
+    flex: none;
+  }
+  .room-bar__first {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .room-bar__last {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-muted);
+  }
+  .room-bar__rooms {
+    list-style: none;
+    margin: 0 0 0 auto;
+    padding: 0;
+    display: flex;
+    gap: 4px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .room-bar__rooms a {
+    display: block;
+    padding: 8px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--ink);
+    white-space: nowrap;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+  .room-bar__rooms a:hover { background: rgba(47, 93, 80, 0.1); }
+  .room-bar__rooms a[aria-current] {
+    background: var(--pine);
+    color: var(--paper);
+  }
+  .room-bar__cv {
+    flex: none;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--mustard);
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .room-bar__cv:hover { background: var(--mustard-deep); color: var(--ink); }
+
+  /* Narrower screens: brand and CV on top, rooms in a swipeable row below */
+  @media (max-width: 1000px) {
+    .room-bar__inner { flex-wrap: wrap; padding-top: 8px; padding-bottom: 6px; }
+    .room-bar__cv { margin-left: auto; }
+    .room-bar__rooms {
+      order: 3;
+      flex: 1 0 100%;
+      margin: 0 calc(-1 * var(--gutter));
+      padding: 2px var(--gutter) 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent 100%);
+    }
+    .room-bar__rooms::-webkit-scrollbar { display: none; }
+    .room-bar__rooms a { padding: 8px 12px; }
+  }
+</style>
+
+<script>
+    // Highlight the room currently in the middle of the screen.
+    const links = new Map();
+    document.querySelectorAll<HTMLAnchorElement>('[data-room-links] a[data-room]').forEach((a) => {
+      links.set(a.dataset.room, a);
+    });
+    const list = document.querySelector<HTMLElement>('[data-room-links]');
+    const onHome = list?.dataset.home === 'true';
+
+    const setCurrent = (id: string) => {
+      links.forEach((a, key) => {
+        if (key === id) a.setAttribute('aria-current', 'location');
+        else a.removeAttribute('aria-current');
+      });
+      // keep the highlighted pill visible in the swipeable phone row
+      const a = links.get(id);
+      if (a && list && list.scrollWidth > list.clientWidth) {
+        const left = a.offsetLeft - list.clientWidth / 2 + a.clientWidth / 2;
+        list.scrollTo({ left, behavior: 'smooth' });
+      }
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setCurrent((e.target as HTMLElement).id);
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px' }
+    );
+    if (onHome) links.forEach((_a, id) => {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+</script>

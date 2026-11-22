@@ -1,0 +1,45 @@
+---
+// The heading block at the top of each room: Urdu name, English title, intro.
+interface Props {
+  urdu: string;
+  title: string;
+  intro: string;
+  dark?: boolean;      // true on night/dusk rooms
+  urduColor?: string;
+}
+const { urdu, title, intro, dark = false, urduColor } = Astro.props;
+---
+<div class:list={['room-head', 'wrap', { 'room-head--dark': dark }]}>
+  <div class="room-head__titles">
+    <span class="urdu room-head__urdu" lang="ur" dir="rtl" style={urduColor ? `color:${urduColor}` : undefined}>{urdu}</span>
+    <h2 class="room-head__title">{title}</h2>
+  </div>
+  <p class="room-head__intro">{intro}</p>
+</div>
+
+<style>
+  .room-head {
+    padding-top: 64px;
+    padding-bottom: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .room-head__titles { display: flex; flex-direction: column; gap: 2px; }
+  .room-head__urdu { font-size: 28px; color: var(--pine); text-align: left; }
+  .room-head__title { font-size: clamp(42px, 7vw, 60px); line-height: 1.05; color: var(--ink); }
+  .room-head__intro {
+    margin: 0;
+    max-width: 440px;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+  }
+  .room-head--dark .room-head__urdu { color: var(--mustard); }
+  .room-head--dark .room-head__title { color: var(--paper); }
+  .room-head--dark .room-head__intro { color: var(--night-text); }
+</style>

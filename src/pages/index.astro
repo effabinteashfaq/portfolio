@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import RoomHead from '../components/RoomHead.astro';
+import Threshold from '../components/Threshold.astro';
+---
+<Base
+  home
+  title="Effa binte Ashfaq · a walk through the haveli"
+  description="Effa binte Ashfaq, Security Researcher and GRC Analyst in Islamabad. A walk through the haveli: research, experience, certifications, projects and writeups."
+>
+  <section id="courtyard" aria-labelledby="courtyard-title" class="room room--courtyard">
+    <div class="wrap courtyard-stub">
+      <p class="urdu courtyard-stub__urdu" lang="ur" dir="rtl">خوش آمدید</p>
+      <h1 id="courtyard-title">Effa binte Ashfaq</h1>
+      <p class="mono courtyard-stub__aka">aka 3FFYP4CK</p>
+      <p class="courtyard-stub__role">Security Researcher &amp; GRC Analyst</p>
+    </div>
+  </section>
+
+  <Threshold from="var(--paper)" to="var(--night)" urdu="مطالعہ" next="the Study" />
+
+  <section id="study" aria-label="Study" class="room room--study">
+    <RoomHead dark urdu="مطالعہ" title="The Study" intro="Late nights, a lantern, and papers that took longer than planned." />
+  </section>
+
+  <Threshold from="var(--night)" to="var(--paper)" urdu="برآمدہ" next="the Veranda" />
+
+  <section id="veranda" aria-label="Veranda" class="room">
+    <RoomHead urdu="برآمدہ" title="The Veranda" intro="Where the work happens with other people: jobs, teams, the society, and the odd paper garland." />
+  </section>
+
+  <Threshold from="var(--paper)" to="var(--paper-deep)" urdu="راہداری" next="the Corridor" />
+
+  <section id="corridor" aria-label="Corridor" class="room room--corridor">
+    <RoomHead urdu="راہداری" title="The Corridor" intro="Certificates and CVE credits, framed on the wall. Hover a frame and the big mirror tells its story." />
+  </section>
+
+  <Threshold from="var(--paper-deep)" to="var(--paper)" urdu="کارخانہ" next="the Workshop" />
+
+  <section id="workshop" aria-label="Workshop" class="room">
+    <RoomHead urdu="کارخانہ" title="The Workshop" intro="Where the tools get built, between parathas and the odd painting left half finished." />
+  </section>
+
+  <Threshold from="var(--paper)" to="#F1E6D3" urdu="کتاب گھر" next="the Library" />
+
+  <section id="library" aria-label="Library" class="room">
+    <RoomHead urdu="کتاب گھر" urduColor="var(--pink-deep)" title="The Library" intro="Writeups bound like books. Pull one off the shelf." />
+  </section>
+
+  <section id="contact" aria-label="Contact" class="room room--contact">
+    <div class="wrap contact-stub">
+      <span class="urdu" lang="ur" dir="rtl">خدا حافظ</span>
+      <h2>Thank you for walking through.</h2>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Step 1 skeleton: each room gets real content in step 3. */
+  .room { min-height: 70vh; padding-bottom: 64px; }
+  .room--study { background: var(--night); color: var(--paper); }
+  .room--corridor { background: var(--paper-deep); }
+  .room--contact { background: var(--dusk); color: var(--paper); min-height: 50vh; }
+
+  .courtyard-stub { padding-top: 64px; display: flex; flex-direction: column; gap: 8px; }
+  .courtyard-stub__urdu { margin: 0; font-size: 26px; color: var(--pine); text-align: left; }
+  .courtyard-stub h1 { font-size: clamp(48px, 9vw, 76px); line-height: 1.02; }
+  .courtyard-stub__aka { margin: 0; font-size: 15px; letter-spacing: 1px; color: var(--ink-muted); }
+  .courtyard-stub__role { margin: 8px 0 0; font-size: 15px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-muted); }
+
+  .contact-stub { padding-top: 64px; display: flex; flex-direction: column; gap: 4px; }
+  .contact-stub .urdu { font-size: 28px; color: var(--mustard); text-align: left; }
+  .contact-stub h2 { font-size: clamp(38px, 6vw, 54px); line-height: 1.05; }
+</style>
