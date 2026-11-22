@@ -62,6 +62,7 @@ const experience = defineCollection({
     location: z.string().optional(),
     dates: z.string(),
     line: z.string(),
+    certificate: asset.optional(),
   }),
 });
 
@@ -119,6 +120,8 @@ const projects = defineCollection({
     status: z.string().optional(),
     line: z.string().optional(),
     link: z.string().url().optional(),
+    color: z.string().optional(),
+    hidden: z.boolean().optional(),
   }),
 });
 

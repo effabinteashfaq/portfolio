@@ -7,7 +7,7 @@ import SubHead from '../SubHead.astro';
 
 const byOrder = (a: any, b: any) => a.data.order - b.data.order;
 const skills = (await getCollection('skills')).sort(byOrder);
-const projects = (await getCollection('projects')).sort(byOrder);
+const projects = (await getCollection('projects')).filter((p) => !p.data.hidden).sort(byOrder);
 const finished = projects.filter((p) => p.data.shelf === 'finished');
 const bench = projects.filter((p) => p.data.shelf === 'workbench');
 const featured = bench.find((p) => p.data.featured);
@@ -65,12 +65,16 @@ const benchAccents = ['#2F5D50', '#3B4F7D', '#C0623A', '#C8961E'];
     <ul class="pieces">
       {finished.map((p) => {
         const Tag = p.data.link ? 'a' : 'div';
+        const accent = p.data.color ?? '#2F5D50';
         return (
           <li>
-            <Tag class="piece" href={p.data.link} rel={p.data.link ? 'noopener' : undefined}>
+            <Tag class="piece" href={p.data.link} rel={p.data.link ? 'noopener' : undefined} style={`--accent:${accent}`}>
+              <span class="piece__date">{p.data.date}</span>
               <h4 class="piece__name">{p.data.name}</h4>
               <p class="piece__line">{p.data.line}</p>
-              <span class="piece__meta">{p.data.stack} · {p.data.date}</span>
+              <ul class="piece__stack" aria-label="Built with">
+                {p.data.stack?.split(',').map((t) => <li>{t.trim()}</li>)}
+              </ul>
             </Tag>
           </li>
         );
@@ -121,8 +125,7 @@ const benchAccents = ['#2F5D50', '#3B4F7D', '#C0623A', '#C8961E'];
   .workshop__block { padding-top: 64px; display: flex; flex-direction: column; gap: 24px; }
   .workshop__block--last { padding-bottom: 96px; }
 
-  /* two cards per row on wide screens, so the cards are wide and short */
-  .toolkit { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(440px, 100%), 1fr)); gap: 22px; }
+  .toolkit { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 22px; }
   .tool {
     background: #FBF7EE;
     border: 1px solid var(--paper-line);
@@ -138,19 +141,25 @@ const benchAccents = ['#2F5D50', '#3B4F7D', '#C0623A', '#C8961E'];
   .tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
   .tags li { font-size: 14px; font-weight: 500; background: var(--tag-bg); color: var(--tag-ink); padding: 6px 12px; border-radius: 6px; }
 
-  .pieces { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .pieces { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 22px; }
   .piece {
-    display: flex; flex-wrap: wrap; align-items: baseline;
-    gap: 8px 24px;
-    padding: 22px 0;
-    border-top: 1px solid var(--paper-line);
+    height: 100%;
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 24px 26px;
+    border-radius: 18px;
+    border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    border-top: 6px solid var(--accent);
+    background: color-mix(in srgb, var(--accent) 10%, #FBF7EE);
     color: var(--ink);
     text-decoration: none;
   }
-  a.piece:hover .piece__name { color: var(--pine); text-decoration: underline; }
-  .piece__name { flex: 0 1 300px; font-size: 28px; line-height: 1.15; }
-  .piece__line { flex: 1 1 420px; margin: 0; color: var(--ink-soft); }
-  .piece__meta { font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-muted); }
+  a.piece:hover .piece__name { text-decoration: underline; }
+  .piece__date { font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: color-mix(in srgb, var(--accent) 70%, #1F2A44); }
+  .piece__name { font-size: 30px; line-height: 1.1; }
+  .piece__line { margin: 0; color: var(--ink-soft); }
+  .piece__stack { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  /* darkened a little so white text stays readable (contrast 4.5:1+) */
+  .piece__stack li { font-size: 13px; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 65%, #1F2A44); color: #FFFFFF; }
 
   .khaaka {
     background: #FBF7EE;

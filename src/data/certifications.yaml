@@ -6,7 +6,7 @@
   issued: 22 Sep 2026
   verifyUrl: https://www.credly.com/badges/cb3eaba3-8257-4c86-b3e7-052e845c5151/public_url
   badge: assets/badges/htb-cdsa.png
-  certificate: assets/certificates/htb-cdsa.png
+  certificate: assets/certificates/hires/htb-cdsa.webp
 
 - id: iso27701-lead-auditor
   order: 2
@@ -17,7 +17,7 @@
   credentialId: wrhz1vtvfy
   verifyUrl: https://learn.mastermindassurance.com/certificates/wrhz1vtvfy
   badge: assets/badges/iso27701-lead-auditor.png
-  certificate: assets/certificates/iso27701-lead-auditor.png
+  certificate: assets/certificates/hires/iso27701-lead-auditor.webp
 
 - id: secops-cbtp
   order: 3
@@ -27,6 +27,7 @@
   credentialId: "11189317"
   verifyNote: SecOps validation portal
   badge: assets/badges/secops-cbtp.png
+  certificate: assets/certificates/hires/secops-cbtp.webp
 
 - id: iso27001-lead-auditor
   order: 4
@@ -37,7 +38,7 @@
   credentialId: tqi3gnj3dy
   verifyUrl: https://learn.mastermindassurance.com/certificates/tqi3gnj3dy
   badge: assets/badges/iso27001-lead-auditor.png
-  certificate: assets/certificates/iso27001-lead-auditor.png
+  certificate: assets/certificates/hires/iso27001-lead-auditor.webp
 
 - id: secops-cap
   order: 5
@@ -47,7 +48,7 @@
   credentialId: "9750971"
   verifyNote: SecOps validation portal
   badge: assets/badges/secops-cap.png
-  certificate: assets/certificates/secops-cap.png
+  certificate: assets/certificates/hires/secops-cap.webp
 
 - id: cisco-cyber-threat-management
   order: 6
@@ -56,7 +57,7 @@
   issued: 31 Aug 2024
   verifyUrl: https://www.credly.com/badges/f339e919-9bdc-4aff-ac6a-1d25ef1cb548/public_url
   badge: assets/badges/cisco-cyber-threat-management.png
-  certificate: assets/certificates/cisco-cyber-threat-management.png
+  certificate: assets/certificates/hires/cisco-cyber-threat-management.webp
 
 - id: skillfront-iso27001-associate
   order: 7
@@ -65,5 +66,5 @@
   issued: 21 Feb 2024
   credentialId: "53738487320824"
   verifyUrl: https://www.skillfront.com/Badges/53738487320824
-  # no badge: the frame uses a crop of the certificate
-  certificate: assets/certificates/skillfront-iso27001-associate.png
+  # no badge: the frame shows a lettered "27001" plate (mockup style)
+  certificate: assets/certificates/hires/skillfront-iso27001-associate.webp

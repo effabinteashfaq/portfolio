@@ -1,0 +1,74 @@
+---
+// A small certificate thumbnail that opens a large view when clicked or tapped.
+// Closes with the Close button, a click outside, or Esc.
+import AssetImage from './AssetImage.astro';
+
+interface Props {
+  src: string;          // e.g. "assets/certificates/hires/htb-cdsa.webp"
+  alt: string;          // description of the certificate (used in the large view)
+  label: string;        // what the thumbnail button says to screen readers
+  thumbWidth?: number;
+  caption?: string;
+}
+const { src, alt, label, thumbWidth = 150, caption } = Astro.props;
+---
+<span class="zoom">
+  <button type="button" class="zoom__thumb" data-zoom-open aria-label={label} style={`--w:${thumbWidth}px`}>
+    <AssetImage src={src} alt="" width={thumbWidth} />
+  </button>
+  <dialog class="zoom__dialog" aria-label={alt}>
+    <form method="dialog" class="zoom__bar">
+      <button class="zoom__close" value="close">Close <span aria-hidden="true">✕</span></button>
+    </form>
+    <AssetImage src={src} alt={alt} width={880} class="zoom__img" />
+    {caption && <p class="zoom__caption">{caption}</p>}
+  </dialog>
+</span>
+
+<style>
+  .zoom { display: contents; }
+  .zoom__thumb {
+    flex: none;
+    display: block;
+    padding: 0;
+    border: 4px solid #FFFFFF;
+    background: #FFFFFF;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+    transform: rotate(2deg);
+    transition: transform 0.25s ease;
+    cursor: zoom-in;
+  }
+  .zoom__thumb:hover, .zoom__thumb:focus-visible { transform: rotate(0deg) scale(1.03); }
+  .zoom__thumb :global(img) { display: block; width: var(--w); height: auto; }
+  .zoom__dialog {
+    width: min(920px, calc(100% - 32px));
+    max-height: calc(100% - 32px);
+    padding: 14px 20px 20px;
+    border: 0;
+    border-radius: 14px;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  }
+  .zoom__dialog::backdrop { background: rgba(20, 18, 34, 0.82); }
+  .zoom__bar { display: flex; justify-content: flex-end; margin: 0 0 10px; }
+  .zoom__close {
+    background: none; border: 1.5px solid var(--ink); border-radius: 999px;
+    padding: 8px 16px; min-height: 40px;
+    font: inherit; font-weight: 700; color: var(--ink); cursor: pointer;
+  }
+  .zoom__close:hover { background: var(--ink); color: var(--paper); }
+  .zoom__dialog :global(.zoom__img) { display: block; width: 100%; height: auto; border-radius: 4px; }
+  .zoom__caption { margin: 12px 0 0; font-family: var(--font-display); font-style: italic; font-size: 18px; color: var(--ink-soft); }
+  @media (prefers-reduced-motion: reduce) { .zoom__thumb { transition: none; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-zoom-open]').forEach((btn) => {
+    const dialog = btn.nextElementSibling as HTMLDialogElement | null;
+    if (!dialog) return;
+    btn.addEventListener('click', () => dialog.showModal());
+    // clicking the dark area outside the box closes it
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+  });
+</script>

@@ -7,3 +7,6 @@ dist/
 .DS_Store
 # generated from assets/ by scripts/prepare-assets.mjs
 public/cv/
+
+# original certificate PDFs stay private; the site uses images made from them
+assets/certificates/originals/

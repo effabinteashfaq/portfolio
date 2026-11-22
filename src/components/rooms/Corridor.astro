@@ -111,7 +111,7 @@ const label = (s: Slot) => {
                 aria-hidden="true"
               >
                 {c && c.badge && <AssetImage src={c.badge} alt="" width={96} />}
-                {c && !c.badge && c.certificate && <AssetImage src={c.certificate} alt="" width={96} class="frame__crop" />}
+                {c && !c.badge && <span class="frame__cve frame__cve--iso">27001</span>}
                 {s.cve && <span class="frame__cve">CVE</span>}
               </span>
             )}
@@ -132,7 +132,7 @@ const label = (s: Slot) => {
         return (
           <article class="cert-large" data-large={s.id} hidden>
             {c.certificate ? (
-              <AssetImage src={c.certificate} alt={`${c.name} certificate`} width={656} class="cert-large__img" />
+              <AssetImage src={c.certificate} alt={`${c.name} certificate`} width={876} class="cert-large__img" />
             ) : (
               <AssetImage src={c.badge!} alt={`${c.name} badge`} width={260} class="cert-large__img cert-large__img--badge" />
             )}
@@ -252,7 +252,7 @@ const label = (s: Slot) => {
 
   /* large view */
   .cert-dialog {
-    width: min(700px, calc(100% - 32px));
+    width: min(920px, calc(100% - 32px));
     max-height: calc(100% - 32px);
     padding: 0;
     border: 0;
@@ -311,9 +311,10 @@ const label = (s: Slot) => {
     filter: drop-shadow(0 3px 4px rgba(30, 15, 5, 0.45));
   }
   .frame__badge :global(img) { width: 100%; height: 100%; object-fit: contain; display: block; }
-  /* SkillFront crop and the CVE label sit on a round plate */
+  /* SkillFront and the CVE frames get a round lettered plate */
   .frame__badge--plate { border-radius: 50%; border: 2px solid #E7C873; overflow: hidden; background: #FBF4E6; }
-  .frame__badge :global(img.frame__crop) { object-fit: cover; object-position: 50% 35%; }
+  /* SkillFront has no badge: a lettered plate in the mockup's ISO style */
+  .frame__cve.frame__cve--iso { background: var(--pine); color: var(--paper); font-size: clamp(8px, 0.85vw, 12.5px); }
   .frame__cve { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--ink); color: var(--mustard); font-weight: 700; font-size: clamp(11px, 1.1vw, 16px); }
   @media (prefers-reduced-motion: reduce) { .frame { transition: none; } }
 

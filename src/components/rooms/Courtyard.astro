@@ -13,7 +13,7 @@ import { site } from '../../data/site.js';
       </div>
       <p class="hero__role">Security Researcher &amp; GRC Analyst</p>
       <p class="hero__lead">I work where policy meets the logs.</p>
-      <p class="hero__intro">On the GRC side, that means reading standards closely, mapping controls and finding the gaps before an auditor does. On the blue team side, it means digging through alerts, timelines and memory dumps to see what really happened. <em class="hero__fav">My favourite moment is when both sides tell the same story.</em> Away from the screen, I paint, chase mountain light with my camera, and never say no to a good paratha.</p>
+      <p class="hero__intro">On the GRC side, that means reading standards closely, mapping controls and finding the gaps before an auditor does. On the blue team side, it means digging through alerts, timelines and memory dumps to see what really happened. My favourite moment is when both sides tell the same story. Away from the screen, I paint, chase mountain light with my camera, and never say no to a good paratha.</p>
       <p class="hero__now"><b>Now:</b> Masters in Information Security at MCS, NUST</p>
       <div class="hero__actions">
         <a class="btn btn-ink" href="#study">Walk through the haveli ↓</a>
@@ -26,6 +26,7 @@ import { site } from '../../data/site.js';
     </div>
     <figure class="hero__figure">
       <Scene name="hero" />
+      <figcaption class="hero__caption">Scanning the horizon, the old-fashioned way.</figcaption>
     </figure>
   </div>
 
@@ -38,9 +39,9 @@ import { site } from '../../data/site.js';
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 48px 64px;
+    gap: 40px 48px;
   }
-  .hero__text { flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 18px; }
+  .hero__text { flex: 1 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 18px; }
   .hero__urdu { margin: 0; font-size: 26px; color: var(--pine); text-align: left; }
   .hero__name { display: flex; flex-direction: column; gap: 6px; }
   .hero__name h1 { font-size: clamp(48px, 8.5vw, 76px); line-height: 1.02; }
@@ -63,19 +64,19 @@ import { site } from '../../data/site.js';
     color: var(--ink);
   }
   .hero__intro { margin: 0; max-width: 560px; color: var(--ink-soft); }
-  .hero__fav {
-    font-family: var(--font-display);
-    font-size: 1.2em;
-    font-weight: 500;
-    line-height: 1.4;
-    color: var(--pine);
-  }
   .hero__now { margin: 0; font-size: 16px; color: var(--ink-soft); }
   .hero__now b { color: var(--ink); }
   .hero__actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 4px; }
   .hero__links { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; font-size: 15px; }
   .hero__links a { display: inline-block; padding: 6px 0; }
-  .hero__figure { flex: 1 1 380px; min-width: 0; margin: 0; display: flex; justify-content: center; }
-  .hero__figure .scene { width: 100%; max-width: 460px; }
+  .hero__figure { flex: 1 1 440px; min-width: 0; margin: 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .hero__figure .scene { width: 100%; max-width: 540px; }
+  .hero__caption {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink-muted);
+    text-align: center;
+  }
 
 </style>

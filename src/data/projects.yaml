@@ -1,10 +1,12 @@
 # Workshop: projects.
 # shelf: "finished" = Finished pieces, "workbench" = On the workbench
 # Leave link out until there is one; the site hides missing links.
+# hidden: true keeps an entry in this file but off the site (delete the line to show it).
 - id: deeptrace
   order: 1
   shelf: finished
   name: DeepTrace
+  color: "#2A9D9B"
   stack: Python, D3, Flask
   date: May 2026
   line: "My final year project that outlived the viva: IPDR-based threat detection, used in real assessments."
@@ -14,6 +16,7 @@
   order: 2
   shelf: finished
   name: ADSScanner Detection Tool
+  color: "#C0623A"
   stack: Python
   date: Oct 2025
   line: Every NTFS file can have a hidden drawer. This script opens them all.
@@ -28,7 +31,7 @@
   line: Pick your standards, answer each control, get a gap report with fixes. Pre-audit, minus the panic.
   # lastUpdated: (date for the log-style "last updated" line, coming from Effa)
 
-- { id: compliance-as-code, order: 4, shelf: workbench, name: Compliance-as-code monitoring, status: Planned }
-- { id: policy-gap-analyzer, order: 5, shelf: workbench, name: Policy gap analyzer, status: Planned }
-- { id: detection-as-code, order: 6, shelf: workbench, name: Detection-as-code pipeline, status: Planned }
-- { id: detection-control-mapper, order: 7, shelf: workbench, name: Detection-to-control coverage mapper, status: Planned }
+- { id: compliance-as-code, order: 4, shelf: workbench, name: Compliance-as-code monitoring, status: Planned, hidden: true }
+- { id: policy-gap-analyzer, order: 5, shelf: workbench, name: Policy gap analyzer, status: Planned, hidden: true }
+- { id: detection-as-code, order: 6, shelf: workbench, name: Detection-as-code pipeline, status: Planned, hidden: true }
+- { id: detection-control-mapper, order: 7, shelf: workbench, name: Detection-to-control coverage mapper, status: Planned, hidden: true }

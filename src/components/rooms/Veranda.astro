@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import RoomHead from '../RoomHead.astro';
 import SubHead from '../SubHead.astro';
 import Scene from '../Scene.astro';
+import ZoomImage from '../ZoomImage.astro';
 
 const byOrder = (a: any, b: any) => a.data.order - b.data.order;
 const experience = (await getCollection('experience')).sort(byOrder);
@@ -19,10 +20,20 @@ const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
     <div class="jobs">
       {experience.map((e, i) => (
         <article class="job" style={`--accent:${accents[i % accents.length]}`}>
-          <span class="job__when">{e.data.dates}{e.data.location && ` · ${cap(e.data.location)}`}</span>
-          <h4 class="job__role">{e.data.role}</h4>
-          <span class="job__org">{e.data.org}</span>
-          <p class="job__line">{e.data.line}</p>
+          <div class="job__text">
+            <span class="job__when">{e.data.dates}{e.data.location && ` · ${cap(e.data.location)}`}</span>
+            <h4 class="job__role">{e.data.role}</h4>
+            <span class="job__org">{e.data.org}</span>
+            <p class="job__line">{e.data.line}</p>
+          </div>
+          {e.data.certificate && (
+            <ZoomImage
+              src={e.data.certificate}
+              alt={`${e.data.org} experience certificate for ${e.data.role}`}
+              label={`View the ${e.data.org} experience certificate`}
+              thumbWidth={120}
+            />
+          )}
         </article>
       ))}
     </div>
@@ -59,9 +70,11 @@ const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
     border-radius: 18px;
     padding: 26px;
     display: flex;
-    flex-direction: column;
-    gap: 6px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 18px 20px;
   }
+  .job__text { flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
   .job__when { font-size: 14px; font-weight: 700; color: var(--ink-muted); }
   .job__role { font-size: 30px; line-height: 1.1; }
   .job__org { font-weight: 700; color: var(--pine); }
