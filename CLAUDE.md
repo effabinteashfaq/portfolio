@@ -13,7 +13,7 @@ This repo is Effa binte Ashfaq's personal portfolio ("a walk through the haveli"
 - Plain CSS with custom properties for the palette (mustard, mint, pine green, wildflower pink, deep ink blue, warm paper). Fonts: Cormorant Garamond (display), Karla (body), Noto Nastaliq Urdu (Urdu), self-hosted via @fontsource packages.
 - Content collections: `src/content/writeups/` (Markdown with frontmatter: title, date, tag, excerpt, coverColor), and data files in `src/data/` for papers, degrees, experience, community, certifications, cves, projects (YAML or JSON).
 - Markdown: render tables, images and Mermaid code blocks (render Mermaid to SVG at build time, e.g. rehype-mermaid, so no heavy JS ships). Writeup headings bold and in palette colours (h2 and h3 alternate colours).
-- Tiny vanilla JS only for: sticky room bar highlight, mirror-wall hover/tap, library shelf, chinar transitions.
+- Tiny vanilla JS only for: sticky room bar highlight, mirror-wall hover/tap, library shelf, chinar transitions, reduce-motion button, "View as list" toggles, certificate large views.
 - Deploy target: Vercel, static. Add `vercel.json` with security headers (Content-Security-Policy, Strict-Transport-Security, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors none).
 
 ## Pages
@@ -23,9 +23,10 @@ This repo is Effa binte Ashfaq's personal portfolio ("a walk through the haveli"
 - Sticky top bar on every page: room links, highlight for the current room, CV download one click away.
 
 ## The chinar leaf "autumn breeze" transition (Effa's favourite, make it lovely)
-- Between rooms, a handful (6–10) of flat SVG chinar (maple-shaped, five-lobed) leaves in mustard, rust, pink and pine drift across the threshold as the visitor scrolls into the next room: a gentle diagonal drift with a slight sway and rotation, like a breeze.
-- Under 1 second per pass, triggered once per threshold with IntersectionObserver, CSS transforms/opacity only (GPU friendly), never blocks scrolling or covers text for long.
-- Fully off when `prefers-reduced-motion: reduce` (show the threshold strip only).
+Updated 22 Nov 2026 at Effa's request (replaces the earlier "under 1 second, inside the threshold" rule):
+- When the visitor scrolls into a threshold, a slow full-screen gust plays once: soft mist rolls across and about 16 flat SVG chinar leaves (five-lobed, mustard, rust, amber, pink, pine) blow across the whole screen in swirls and loops, then the mist clears to reveal the next room as it rises in. About 3 to 4 seconds.
+- Once per threshold (IntersectionObserver), CSS transforms/opacity only, pointer-events none: it never blocks scrolling or clicks.
+- Off when the visitor's device asks for reduced motion, and a "Reduce motion" button in the top bar turns it (and the room rise-in) off or on, remembered per device. Built in `src/components/Gust.astro` and `src/scripts/motion.ts`.
 - Each threshold also has the patchwork strip inspired by Effa's geometric painting (see mockup).
 
 ## Hero specifics

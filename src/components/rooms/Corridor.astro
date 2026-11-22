@@ -7,6 +7,7 @@ import Scene from '../Scene.astro';
 import Frame from '../Frame.astro';
 import AssetImage from '../AssetImage.astro';
 import SubHead from '../SubHead.astro';
+import ViewToggle from '../ViewToggle.astro';
 
 const byOrder = (a: any, b: any) => a.data.order - b.data.order;
 const certs = (await getCollection('certifications')).sort(byOrder);
@@ -44,6 +45,9 @@ const label = (s: Slot) => {
 <section id="corridor" aria-labelledby="corridor-title" class="corridor">
   <RoomHead id="corridor-title" urdu="راہداری" title="The Corridor" intro="Certificates and CVE credits, framed on the wall. Hover a frame and the big mirror tells its story." />
 
+  <div class="wrap"><ViewToggle fancy="corridor-wall" list="corridor-list" back="Back to the wall" /></div>
+
+  <div id="corridor-wall">
   <div class="wall-scroll" data-wall>
     <div class="wall">
       <Scene name="corridor-wall" class="wall__bg" />
@@ -121,6 +125,30 @@ const label = (s: Slot) => {
     </div>
   </div>
   <p class="wall-hint">Swipe sideways to see the whole wall.</p>
+  </div>
+
+  <div id="corridor-list" class="wrap" hidden>
+    <ul class="cert-list">
+      {certs.map((c) => {
+        const slot = slots.find((s) => s.cert === c.id);
+        return (
+          <li class="cert-row">
+            <div class="cert-row__main">
+              <h3 class="cert-row__name">{c.data.name}</h3>
+              <span class="cert-row__meta">{c.data.issuer} · Issued {c.data.issued}{c.data.validUntil && ` · valid until ${c.data.validUntil}`}</span>
+              {c.data.credentialId && <span class="cert-row__id mono">ID {c.data.credentialId}</span>}
+            </div>
+            <div class="cert-row__actions">
+              {slot && <button type="button" class="cert-row__view" data-enlarge-slot={slot.id}>View certificate</button>}
+              {c.data.verifyUrl ? (
+                <a href={c.data.verifyUrl} rel="noopener">Verify →</a>
+              ) : c.data.verifyNote && <span class="cert-row__note">Verify on the {c.data.verifyNote}</span>}
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
 
   <dialog class="cert-dialog" data-cert-dialog>
     <div class="cert-dialog__inner">
@@ -318,6 +346,23 @@ const label = (s: Slot) => {
   .frame__cve { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--ink); color: var(--mustard); font-weight: 700; font-size: clamp(11px, 1.1vw, 16px); }
   @media (prefers-reduced-motion: reduce) { .frame { transition: none; } }
 
+  /* list view */
+  .cert-list { list-style: none; margin: 0; padding: 0; background: #FBF7EE; border: 1px solid var(--paper-line); border-radius: 16px; overflow: hidden; }
+  .cert-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; padding: 18px 24px; border-bottom: 1px solid var(--paper-line); }
+  .cert-row:last-child { border-bottom: 0; }
+  .cert-row__main { flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .cert-row__name { font-size: 23px; line-height: 1.2; }
+  .cert-row__meta { font-size: 14px; color: var(--ink-soft); }
+  .cert-row__id { font-size: 13px; color: var(--ink-muted); overflow-wrap: anywhere; }
+  .cert-row__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; font-weight: 700; font-size: 15px; }
+  .cert-row__view {
+    background: none; border: 1.5px solid var(--pine); border-radius: 999px;
+    padding: 7px 14px; min-height: 40px;
+    font: inherit; font-size: 14px; font-weight: 700; color: var(--pine); cursor: zoom-in;
+  }
+  .cert-row__view:hover { background: var(--pine); color: var(--paper); }
+  .cert-row__note { font-size: 13px; font-weight: 400; color: var(--ink-muted); }
+
   /* CVE list */
   .corridor__cves { padding-top: 56px; display: flex; flex-direction: column; gap: 20px; }
   .cves { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 20px; }
@@ -354,11 +399,11 @@ const label = (s: Slot) => {
     const mirror = wall.querySelector<HTMLElement>('.mirror');
     const dialog = document.querySelector<HTMLDialogElement>('[data-cert-dialog]');
     let current = 'none';
-    const enlarge = () => {
-      if (!dialog || current === 'none') return;
+    const enlarge = (id = current) => {
+      if (!dialog || id === 'none') return;
       let title = '';
       dialog.querySelectorAll<HTMLElement>('[data-large]').forEach((a) => {
-        a.hidden = a.dataset.large !== current;
+        a.hidden = a.dataset.large !== id;
         if (!a.hidden) title = a.querySelector('[data-dialog-title]')?.textContent || '';
       });
       dialog.setAttribute('aria-label', title);
@@ -369,6 +414,10 @@ const label = (s: Slot) => {
       if ((e.target as HTMLElement).closest('a')) return;
       enlarge();
     });
+    // "View certificate" buttons in the list view open the same large view
+    document.querySelectorAll<HTMLButtonElement>('[data-enlarge-slot]').forEach((b) =>
+      b.addEventListener('click', () => enlarge(b.dataset.enlargeSlot))
+    );
     // clicking the dark area outside the box closes it
     dialog?.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
 

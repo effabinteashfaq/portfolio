@@ -1,0 +1,69 @@
+---
+// The "View as list" bubble: switches a room between its illustrated view and a
+// plain, accessible list. `fancy` and `list` are the ids of the two views.
+interface Props {
+  fancy: string;
+  list: string;
+  back: string;          // label for returning, e.g. "Back to the wall"
+  align?: 'start' | 'end';
+}
+const { fancy, list, back, align = 'end' } = Astro.props;
+---
+<div class:list={['view-toggle', `view-toggle--${align}`]}>
+  <button
+    type="button"
+    class="view-toggle__btn"
+    data-view-toggle
+    data-fancy={fancy}
+    data-list={list}
+    data-back={back}
+    aria-controls={`${fancy} ${list}`}
+    aria-pressed="false"
+  >
+    <svg class="icon-list" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.2" fill="currentColor"/><circle cx="4.5" cy="12" r="1.2" fill="currentColor"/><circle cx="4.5" cy="18" r="1.2" fill="currentColor"/></svg>
+    <svg class="icon-back" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>
+    <span class="view-toggle__label">View as list</span>
+  </button>
+</div>
+
+<style>
+  .view-toggle { display: flex; padding-top: 8px; padding-bottom: 12px; }
+  .view-toggle--end { justify-content: flex-end; }
+  .view-toggle--start { justify-content: flex-start; }
+  .view-toggle__btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    min-height: 44px;
+    padding: 10px 20px;
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    background: #FBF7EE;
+    color: var(--ink);
+    font: inherit; font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(60, 40, 20, 0.08);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .view-toggle__btn:hover { background: var(--ink); color: var(--paper); }
+  .view-toggle__btn .icon-back { display: none; }
+  .view-toggle__btn[aria-pressed='true'] .icon-list { display: none; }
+  .view-toggle__btn[aria-pressed='true'] .icon-back { display: block; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-view-toggle]').forEach((btn) => {
+    const fancy = document.getElementById(btn.dataset.fancy || '');
+    const list = document.getElementById(btn.dataset.list || '');
+    const label = btn.querySelector('.view-toggle__label');
+    if (!fancy || !list || !label) return;
+    const start = label.textContent || 'View as list';
+    btn.addEventListener('click', () => {
+      const showList = btn.getAttribute('aria-pressed') !== 'true';
+      btn.setAttribute('aria-pressed', String(showList));
+      fancy.hidden = showList;
+      list.hidden = !showList;
+      label.textContent = showList ? btn.dataset.back || 'Back' : start;
+      // the revealed view may have been waiting to rise in
+      (showList ? list : fancy).classList.add('is-risen');
+    });
+  });
+</script>

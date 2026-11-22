@@ -82,6 +82,9 @@ body {
 
 img, :not(svg) > svg { max-width: 100%; }
 
+/* anything marked hidden stays hidden, even if its class sets a display style */
+[hidden] { display: none !important; }
+
 a { color: var(--pine); }
 a:hover { color: var(--ink); }
 

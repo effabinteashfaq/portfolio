@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import RoomHead from '../RoomHead.astro';
 import Scene from '../Scene.astro';
 import SubHead from '../SubHead.astro';
+import ViewToggle from '../ViewToggle.astro';
 
 const byOrder = (a: any, b: any) => a.data.order - b.data.order;
 const skills = (await getCollection('skills')).sort(byOrder);
@@ -59,8 +60,11 @@ const benchAccents = ['#2F5D50', '#3B4F7D', '#C0623A', '#C8961E'];
     </div>
   </div>
 
+  <div class="wrap workshop__toggle"><ViewToggle fancy="workshop-projects" list="workshop-list" back="Back to the cards" /></div>
+
+  <div id="workshop-projects">
   <!-- Finished pieces -->
-  <div class="wrap workshop__block">
+  <div class="wrap workshop__block workshop__block--first">
     <SubHead title="Finished pieces" />
     <ul class="pieces">
       {finished.map((p) => {
@@ -117,6 +121,22 @@ const benchAccents = ['#2F5D50', '#3B4F7D', '#C0623A', '#C8961E'];
       ))}
     </ul>
   </div>
+  </div>
+
+  <div id="workshop-list" class="wrap workshop__block workshop__block--last" hidden>
+    <SubHead title="Projects" />
+    <ul class="project-list">
+      {projects.map((p) => (
+        <li class="project-row">
+          <h4 class="project-row__name">
+            {p.data.link ? <a href={p.data.link} rel="noopener">{p.data.name}</a> : p.data.name}
+          </h4>
+          <span class="project-row__meta">{[p.data.shelf === 'finished' ? 'Finished' : 'On the workbench', p.data.version, p.data.stack, p.data.date].filter(Boolean).join(' · ')}</span>
+          {p.data.line && <p class="project-row__line">{p.data.line}</p>}
+        </li>
+      ))}
+    </ul>
+  </div>
 </section>
 
 <style>
@@ -124,6 +144,14 @@ const benchAccents = ['#2F5D50', '#3B4F7D', '#C0623A', '#C8961E'];
   .workshop__scene { max-width: 1440px; margin: 0 auto; }
   .workshop__block { padding-top: 64px; display: flex; flex-direction: column; gap: 24px; }
   .workshop__block--last { padding-bottom: 96px; }
+  .workshop__toggle { padding-top: 40px; }
+  .workshop__block--first { padding-top: 8px; }
+  .project-list { list-style: none; margin: 0; padding: 0; background: #FBF7EE; border: 1px solid var(--paper-line); border-radius: 16px; overflow: hidden; }
+  .project-row { display: flex; flex-direction: column; gap: 4px; padding: 18px 24px; border-bottom: 1px solid var(--paper-line); }
+  .project-row:last-child { border-bottom: 0; }
+  .project-row__name { font-size: 25px; line-height: 1.2; }
+  .project-row__meta { font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-muted); }
+  .project-row__line { margin: 0; color: var(--ink-soft); }
 
   .toolkit { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 22px; }
   .tool {

@@ -41,10 +41,10 @@ import { site } from '../../data/site.js';
     align-items: center;
     gap: 40px 48px;
   }
-  .hero__text { flex: 1 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 18px; }
+  .hero__text { flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 18px; }
   .hero__urdu { margin: 0; font-size: 26px; color: var(--pine); text-align: left; }
   .hero__name { display: flex; flex-direction: column; gap: 6px; }
-  .hero__name h1 { font-size: clamp(48px, 8.5vw, 76px); line-height: 1.02; }
+  .hero__name h1 { font-size: clamp(46px, 6vw, 70px); line-height: 1.02; }
   .hero__aka { margin: 0; font-size: 15px; letter-spacing: 1px; color: var(--ink-muted); }
   .hero__role {
     margin: 4px 0 0;
@@ -69,8 +69,9 @@ import { site } from '../../data/site.js';
   .hero__actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 4px; }
   .hero__links { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; font-size: 15px; }
   .hero__links a { display: inline-block; padding: 6px 0; }
-  .hero__figure { flex: 1 1 440px; min-width: 0; margin: 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-  .hero__figure .scene { width: 100%; max-width: 540px; }
+  .hero__figure { flex: 1 1 480px; min-width: 0; margin: 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  /* :global because the drawing lives inside the Scene component */
+  .hero__figure :global(.scene) { width: 100%; max-width: 600px; }
   .hero__caption {
     font-family: var(--font-display);
     font-style: italic;
