@@ -31,7 +31,3 @@
   line: Pick your standards, answer each control, get a gap report with fixes. Pre-audit, minus the panic.
   # lastUpdated: (date for the log-style "last updated" line, coming from Effa)
 
-- { id: compliance-as-code, order: 4, shelf: workbench, name: Compliance-as-code monitoring, status: Planned, hidden: true }
-- { id: policy-gap-analyzer, order: 5, shelf: workbench, name: Policy gap analyzer, status: Planned, hidden: true }
-- { id: detection-as-code, order: 6, shelf: workbench, name: Detection-as-code pipeline, status: Planned, hidden: true }
-- { id: detection-control-mapper, order: 7, shelf: workbench, name: Detection-to-control coverage mapper, status: Planned, hidden: true }

@@ -1,0 +1,46 @@
+This repository holds two kinds of material under different terms.
+
+1. CODE: MIT License
+
+The source code (the files in src/ other than src/content/, src/data/,
+src/scenes/ and src/logos/, plus scripts/ and the configuration files) is
+released under the MIT License:
+
+Copyright (c) 2026 Effa binte Ashfaq
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+2. CONTENT: All rights reserved
+
+Copyright (c) 2026 Effa binte Ashfaq. All rights reserved.
+
+The writeups (src/content/), the site text and data (src/data/), the
+illustrations and scenes (src/scenes/, assets/figures/, public/favicon.svg),
+the badges, certificates and CV (assets/), and the author's name, likeness and
+personal details are not covered by the MIT License. They may not be copied,
+republished or reused without written permission. Short quotations with a
+link back are welcome.
+
+3. THIRD-PARTY MATERIAL
+
+Certification badges, certificates and institution emblems belong to their
+issuers. The Wazuh and Gitea logos in src/logos/ are trademarks of their
+owners and are used only to identify the products named in CVE credits
+(sources in src/logos/SOURCES.txt). Fonts are used under the SIL Open Font
+License via the @fontsource packages.

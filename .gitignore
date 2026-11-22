@@ -10,3 +10,10 @@ public/cv/
 
 # original certificate PDFs stay private; the site uses images made from them
 assets/certificates/originals/
+
+# planning notes, mockups and build guide: kept on Effa's laptop, not published
+docs/
+reference/
+CLAUDE.md
+START-HERE.md
+scripts/extract-scenes.py
