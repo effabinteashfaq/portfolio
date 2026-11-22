@@ -16,7 +16,7 @@ Almost every secure connection you make, from banking apps to software updates, 
 
 That machine does not exist yet. But attackers do not need to wait for it. They can record encrypted traffic now and decrypt it later, once the hardware arrives. Security people call this **harvest now, decrypt later**, and it is why the move to new cryptography has already started.
 
-The leading replacement is built on something called a lattice. This post explains what that is, why it is hard to break, and why picking the right maths is only half the job. It is based on a survey I co-authored with colleagues at Air University, *Lattice-Based Cryptography for Post-Quantum Security*, which reviewed 138 sources on the topic. No equations required.
+The leading replacement is built on something called a lattice. This post explains what that is, why it is hard to break, and why picking the right maths is only half the job. It is based on a survey, *Lattice-Based Cryptography for Post-Quantum Security*, which reviewed 138 sources on the topic. No equations required.
 
 ## So what is a lattice?
 

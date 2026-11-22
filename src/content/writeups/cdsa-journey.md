@@ -23,7 +23,7 @@ understanding of cybersecurity, how challenging the learning process
 would become, or that a few months after earning the certification, I
 would be invited to deliver a blue-team workshop at FAST.
 
-This is an account of that journey --- from exploring defensive security
+This is an account of that journey, from exploring defensive security
 to earning my first hands-on blue team certification, and
 eventually teaching the concepts I had worked so hard to understand.
 
@@ -278,8 +278,8 @@ intended timeline.
 Personal circumstances affected my consistency, and I reached a point
 where I had to accelerate my progress considerably.
 
-Some of the areas I had struggled with earlier --- particularly Windows,
-Active Directory, and event logs --- were now areas I needed to revisit
+Some of the areas I had struggled with earlier (particularly Windows,
+Active Directory, and event logs) were now areas I needed to revisit
 and understand much more quickly.
 
 There were frustrating labs, unfamiliar concepts, and moments when I
@@ -497,7 +497,7 @@ From spending months trying to understand Windows Event Logs to standing
 in front of students and explaining how analysts use them during
 investigations, the journey has certainly come a long way.
 
-**September 22, 2026, will remain an important milestone for me --- not
+**September 22, 2026, will remain an important milestone for me, not
 just because I cleared my first hands-on blue team
 certification, but because it marked the beginning of a much more
 practical relationship with defensive security.**
