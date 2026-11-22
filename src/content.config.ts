@@ -16,6 +16,8 @@ const writeups = defineCollection({
     excerpt: z.string(),
     coverColor: z.string().regex(/^#[0-9A-Fa-f]{6}$/),
     order,
+    // draft: shows on the shelf as an "On the way" book, with no page yet
+    draft: z.boolean().optional(),
   }),
 });
 

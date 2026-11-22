@@ -1,6 +1,6 @@
 ---
 // The autumn breeze: a slow, full-screen gust of mist and chinar leaves that
-// swirl in loops across the page, then clear to reveal the next room.
+// swirl in loops across the page (about 2 seconds), then clear to reveal the next room.
 // Rendered once per page; src/scripts/motion.ts plays it at each threshold.
 // Three variants (different leaves and mist) are cycled so doorways differ.
 
@@ -24,14 +24,17 @@ const sets = Array.from({ length: variants }, (_, v) => {
   const rand = makeRand(1009 + v * 7919);
   const between = (lo: number, hi: number) => lo + rand() * (hi - lo);
   const leafList = Array.from({ length: leaves }, (_, i) => {
-    const dur = Math.round(between(2300, 2900));
+    const dur = Math.round(between(1600, 2000));
+    const x = between(-6, 34);                     // vw: some leaves are already in the air
     return {
+      x: x.toFixed(1),
+      tx: (110 - x + between(0, 10)).toFixed(1),     // vw travelled, always off the right edge
       colour: colours[(i * 5 + v * 3) % colours.length],
       size: Math.round(between(30, 62)),
       y: between(4, 88).toFixed(1),                  // vh, where it enters
       dy: Math.round(between(-14, 18)),              // vh it rises or falls while crossing
       dur,
-      delay: Math.round(between(0, 750)),
+      delay: Math.round(between(0, 220)),
       radius: Math.round(between(30, 120)),          // size of its loops, px
       turns: Math.round(between(300, 820)) * (rand() < 0.5 ? -1 : 1), // degrees of looping
       spin: Math.round(between(200, 540)) * (rand() < 0.4 ? -1 : 1),
@@ -42,8 +45,8 @@ const sets = Array.from({ length: variants }, (_, v) => {
     y: between(-10, 70).toFixed(1),                  // vh
     w: Math.round(between(70, 115)),                 // vw
     h: Math.round(between(35, 65)),                  // vh
-    dur: Math.round(between(2600, 3200)),
-    delay: Math.round(between(0, 450)),
+    dur: Math.round(between(1800, 2200)),
+    delay: Math.round(between(0, 200)),
     peak: between(0.55, 0.85).toFixed(2),
   }));
   return { leafList, mist };
@@ -57,7 +60,7 @@ const sets = Array.from({ length: variants }, (_, v) => {
         <span class="mist" style={`top:${m.y}vh;width:${m.w}vw;height:${m.h}vh;--dur:${m.dur}ms;--delay:${m.delay}ms;--peak:${m.peak}`}></span>
       ))}
       {set.leafList.map((l) => (
-        <span class="gleaf" style={`top:${l.y}vh;--dy:${l.dy}vh;--dur:${l.dur}ms;--delay:${l.delay}ms`}>
+        <span class="gleaf" style={`top:${l.y}vh;left:${l.x}vw;--tx:${l.tx}vw;--dy:${l.dy}vh;--dur:${l.dur}ms;--delay:${l.delay}ms`}>
           <span class="gleaf__orbit" style={`--turns:${l.turns}deg`}>
             <span class="gleaf__arm" style={`--r:${l.radius}px`}>
               <svg class="gleaf__body" width={l.size} height={l.size} focusable="false"
@@ -84,14 +87,14 @@ const sets = Array.from({ length: variants }, (_, v) => {
     position: absolute; inset: 0;
     background: rgba(251, 246, 236, 0.32);
     opacity: 0;
-    animation: veil 3000ms ease-in-out both;
+    animation: veil 2000ms ease-in-out both;
   }
-  @keyframes veil { 0% { opacity: 0; } 40% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes veil { 0% { opacity: 0; } 35% { opacity: 1; } 100% { opacity: 0; } }
 
   /* mist: soft drifts rolling in from the left */
   .mist {
     position: absolute;
-    left: -60vw;
+    left: -45vw;
     border-radius: 50%;
     background: radial-gradient(closest-side, rgba(255, 251, 242, 0.95), rgba(255, 251, 242, 0.55) 45%, rgba(255, 251, 242, 0) 100%);
     opacity: 0;
@@ -108,15 +111,14 @@ const sets = Array.from({ length: variants }, (_, v) => {
   /* leaves: travel across the whole screen... */
   .gleaf {
     position: absolute;
-    left: -8vw;
     animation: gleaf-cross var(--dur) cubic-bezier(0.35, 0.15, 0.55, 0.9) var(--delay) both;
     will-change: transform, opacity;
   }
   @keyframes gleaf-cross {
     0%   { transform: translate(0, 0); opacity: 0; }
-    8%   { opacity: 1; }
-    88%  { opacity: 1; }
-    100% { transform: translate(118vw, var(--dy)); opacity: 0; }
+    5%   { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { transform: translate(var(--tx), var(--dy)); opacity: 0; }
   }
   /* ...while circling around a moving centre, which draws loops and swirls */
   .gleaf__orbit {

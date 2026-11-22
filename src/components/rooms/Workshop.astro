@@ -76,9 +76,8 @@ const benchAccents = ['#2F5D50', '#3B4F7D', '#C0623A', '#C8961E'];
               <h4 class="piece__name">{p.data.name}</h4>
               <div class="piece__body">
                 <p class="piece__line">{p.data.line}</p>
-                <ul class="piece__chips" aria-label="Tools and date">
+                <ul class="piece__chips" aria-label="Tools">
                   {p.data.stack?.split(',').map((t) => <li class="chip chip--tool">{t.trim()}</li>)}
-                  {p.data.date && <li class="chip chip--date">{p.data.date}</li>}
                 </ul>
               </div>
             </Tag>
@@ -133,7 +132,7 @@ const benchAccents = ['#2F5D50', '#3B4F7D', '#C0623A', '#C8961E'];
           <h4 class="project-row__name">
             {p.data.link ? <a href={p.data.link} rel="noopener">{p.data.name}</a> : p.data.name}
           </h4>
-          <span class="project-row__meta">{[p.data.shelf === 'finished' ? 'Finished' : 'On the workbench', p.data.version, p.data.stack, p.data.date].filter(Boolean).join(' · ')}</span>
+          <span class="project-row__meta">{[p.data.shelf === 'finished' ? 'Finished' : 'On the workbench', p.data.version, p.data.stack].filter(Boolean).join(' · ')}</span>
           {p.data.line && <p class="project-row__line">{p.data.line}</p>}
         </li>
       ))}
@@ -188,7 +187,6 @@ const benchAccents = ['#2F5D50', '#3B4F7D', '#C0623A', '#C8961E'];
   .chip { font-size: 13px; font-weight: 700; padding: 5px 12px; border-radius: 999px; }
   /* tool bubbles in the project's colour, darkened a little so white text stays readable */
   .chip--tool { background: color-mix(in srgb, var(--accent) 65%, #1F2A44); color: #FFFFFF; }
-  .chip--date { background: #FBE7A8; color: #6B4A12; }
 
   .khaaka {
     background: #FBF7EE;

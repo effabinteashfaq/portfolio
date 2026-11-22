@@ -24,7 +24,7 @@ This repo is Effa binte Ashfaq's personal portfolio ("a walk through the haveli"
 
 ## The chinar leaf "autumn breeze" transition (Effa's favourite, make it lovely)
 Updated 22 Nov 2026 at Effa's request (replaces the earlier "under 1 second, inside the threshold" rule):
-- When the visitor scrolls into a threshold, a slow full-screen gust plays once: soft mist rolls across and about 16 flat SVG chinar leaves (five-lobed, mustard, rust, amber, pink, pine) blow across the whole screen in swirls and loops, then the mist clears to reveal the next room as it rises in. About 3 to 4 seconds.
+- When the visitor scrolls into a threshold, a slow full-screen gust plays once: soft mist rolls across and about 16 flat SVG chinar leaves (five-lobed, mustard, rust, amber, pink, pine) blow across the whole screen in swirls and loops, then the mist clears to reveal the next room as it rises in. About 2 seconds, starting as soon as the doorway peeks in at the bottom of the screen.
 - Once per threshold (IntersectionObserver), CSS transforms/opacity only, pointer-events none: it never blocks scrolling or clicks.
 - Off when the visitor's device asks for reduced motion, and a "Reduce motion" button in the top bar turns it (and the room rise-in) off or on, remembered per device. Built in `src/components/Gust.astro` and `src/scripts/motion.ts`.
 - Each threshold also has the patchwork strip inspired by Effa's geometric painting (see mockup).

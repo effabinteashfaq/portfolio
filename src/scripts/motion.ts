@@ -61,7 +61,7 @@ if ('IntersectionObserver' in window) {
     });
   }
 
-  // the breeze: once per threshold, when it reaches the lower part of the screen
+  // the breeze: once per threshold, as soon as it peeks in at the bottom of the screen
   const playGust = (threshold: Element) => {
     if (!motionOn || !gust || playing) return;
     playing = true;
@@ -74,17 +74,17 @@ if ('IntersectionObserver' in window) {
     // the next room's heading rises as the mist clears
     const head = threshold.nextElementSibling?.querySelector<HTMLElement>(':scope > .rise:not(.is-risen)');
     if (head) {
-      head.style.transitionDelay = '1100ms';
+      head.style.transitionDelay = '700ms';
       head.classList.add('is-risen');
       riseIO.unobserve(head);
-      window.setTimeout(() => (head.style.transitionDelay = ''), 2200);
+      window.setTimeout(() => (head.style.transitionDelay = ''), 1600);
     }
 
     window.clearTimeout(gustTimer);
     gustTimer = window.setTimeout(() => {
       gust.classList.remove('is-playing');
       playing = false;
-    }, 3900);
+    }, 2500);
   };
 
   const breezeIO = new IntersectionObserver(
@@ -95,7 +95,7 @@ if ('IntersectionObserver' in window) {
         playGust(e.target);
       });
     },
-    { threshold: 0, rootMargin: '0px 0px -40% 0px' }
+    { threshold: 0, rootMargin: '0px 0px -10% 0px' }
   );
   document.querySelectorAll('[data-breeze]').forEach((el) => breezeIO.observe(el));
 }

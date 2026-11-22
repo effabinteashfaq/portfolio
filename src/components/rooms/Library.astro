@@ -20,7 +20,9 @@ const motif: Record<string, string> = {
   GRC: '<path d="M7 3 H17 A2 2 0 0 1 19 5 V19 A2 2 0 0 1 17 21 H7 A2 2 0 0 1 5 19 V5 A2 2 0 0 1 7 3 Z"/><path d="M9 8 H15 M9 12 H15 M9 16 H13"/>',
   Research: '<circle cx="6" cy="6" r="1.2"/><circle cx="12" cy="6" r="1.2"/><circle cx="18" cy="6" r="1.2"/><circle cx="6" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="18" cy="12" r="1.2"/><circle cx="6" cy="18" r="1.2"/><circle cx="12" cy="18" r="1.2"/><circle cx="18" cy="18" r="1.2"/><path d="M6 18 L12 12 L18 6"/>',
 };
+motif.draft = '<path d="M19 4 C12 6 8 11 6.5 18"/><path d="M19 4 C18 10 14 14 8.5 15.5"/><path d="M5 20 L7.5 16.5"/>';
 const url = (id: string) => `/writeups/${id}/`;
+const STILL = 'Still being written';
 ---
 <section id="library" aria-labelledby="library-title" class="library">
   <RoomHead id="library-title" urdu="کتاب گھر" urduColor="var(--pink-deep)" title="The Library" intro="Writeups bound like books. Pull one off the shelf." />
@@ -52,10 +54,19 @@ const url = (id: string) => `/writeups/${id}/`;
         <p class="open-book__hint" data-book-panel="none">Pick a book from the shelf.</p>
         {writeups.map((w) => (
           <article class="open-book__page" data-book-panel={w.id} hidden>
-            <span class="open-book__tag">{w.data.tag}</span>
-            <h3 class="open-book__title">{w.data.title}</h3>
-            <p class="open-book__excerpt">{w.data.excerpt}</p>
-            <a class="open-book__link" href={url(w.id)}>Open the book →</a>
+            {w.data.draft ? (
+              <>
+                <h3 class="open-book__title">{w.data.title}</h3>
+                <p class="open-book__draft">{STILL}</p>
+              </>
+            ) : (
+              <>
+                <span class="open-book__tag">{w.data.tag}</span>
+                <h3 class="open-book__title">{w.data.title}</h3>
+                <p class="open-book__excerpt">{w.data.excerpt}</p>
+                <a class="open-book__link" href={url(w.id)}>Open the book →</a>
+              </>
+            )}
           </article>
         ))}
       </div>
@@ -67,16 +78,27 @@ const url = (id: string) => `/writeups/${id}/`;
     <ul class="covers">
       {writeups.map((w) => (
         <li>
-          <a class="book" href={url(w.id)}>
-            <div class="book__cover" aria-hidden="true" style={`--cover:${w.data.coverColor};--edge:${darken(w.data.coverColor)}`}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="#E7C873" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={motif[w.data.tag] ?? motif.Research} />
-              <span>{w.data.tag}</span>
+          {w.data.draft ? (
+            <div class="book book--draft">
+              <div class="book__cover" aria-hidden="true" style={`--cover:${w.data.coverColor};--edge:${darken(w.data.coverColor)}`}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="#E7C873" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={motif.draft} />
+                <span>{w.data.tag}</span>
+              </div>
+              <h3 class="book__title">{w.data.title}</h3>
+              <span class="book__excerpt">{STILL}</span>
             </div>
-            <span class="book__tag">{w.data.tag}{w.data.date && ` · ${fmt(w.data.date)}`}</span>
-            <h3 class="book__title">{w.data.title}</h3>
-            <span class="book__excerpt">{w.data.excerpt}</span>
-            <span class="book__open">Open the book →</span>
-          </a>
+          ) : (
+            <a class="book" href={url(w.id)}>
+              <div class="book__cover" aria-hidden="true" style={`--cover:${w.data.coverColor};--edge:${darken(w.data.coverColor)}`}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="#E7C873" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={motif[w.data.tag] ?? motif.Research} />
+                <span>{w.data.tag}</span>
+              </div>
+              <span class="book__tag">{w.data.tag}{w.data.date && ` · ${fmt(w.data.date)}`}</span>
+              <h3 class="book__title">{w.data.title}</h3>
+              <span class="book__excerpt">{w.data.excerpt}</span>
+              <span class="book__open">Open the book →</span>
+            </a>
+          )}
         </li>
       ))}
     </ul>
@@ -87,9 +109,18 @@ const url = (id: string) => `/writeups/${id}/`;
     <ul class="writeup-list">
       {writeups.map((w) => (
         <li class="writeup-row">
-          <span class="writeup-row__meta">{w.data.tag}{w.data.date && ` · ${fmt(w.data.date)}`}</span>
-          <h3 class="writeup-row__title"><a href={url(w.id)}>{w.data.title}</a></h3>
-          <p class="writeup-row__excerpt">{w.data.excerpt}</p>
+          {w.data.draft ? (
+            <>
+              <h3 class="writeup-row__title">{w.data.title}</h3>
+              <p class="writeup-row__excerpt">{STILL}</p>
+            </>
+          ) : (
+            <>
+              <span class="writeup-row__meta">{w.data.tag}{w.data.date && ` · ${fmt(w.data.date)}`}</span>
+              <h3 class="writeup-row__title"><a href={url(w.id)}>{w.data.title}</a></h3>
+              <p class="writeup-row__excerpt">{w.data.excerpt}</p>
+            </>
+          )}
         </li>
       ))}
     </ul>
@@ -182,6 +213,7 @@ const url = (id: string) => `/writeups/${id}/`;
   .open-book__title { font-size: clamp(15px, 1.5vw, 19px); font-weight: 700; line-height: 1.15; }
   .open-book__excerpt { margin: 0; font-size: 12.5px; line-height: 1.45; color: var(--ink-soft); }
   .open-book__link { font-size: 13px; font-weight: 700; }
+  .open-book__draft { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 17px; color: #8A3D57; }
 
   /* Phones: the nook becomes a picture; the covers below do the work */
   @media (max-width: 760px) {
@@ -221,6 +253,7 @@ const url = (id: string) => `/writeups/${id}/`;
   .book__title { font-size: 23px; line-height: 1.15; }
   .book__excerpt { font-size: 15px; color: var(--ink-soft); }
   .book__open { font-weight: 700; color: var(--pine); font-size: 15px; }
+  .book--draft .book__excerpt { font-family: var(--font-display); font-style: italic; font-size: 18px; color: #8A3D57; }
   .book:hover .book__open { text-decoration: underline; }
   @media (prefers-reduced-motion: reduce) { .book__cover { transition: none; } }
 </style>
