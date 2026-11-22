@@ -15,9 +15,9 @@
     "@fontsource/cormorant-garamond": "^5.3.0",
     "@fontsource/karla": "^5.3.0",
     "@fontsource/noto-nastaliq-urdu": "^5.3.0",
-    "astro": "7.4.1"
+    "astro": "7.4.13"
   },
   "engines": {
-    "node": ">=22.22.0"
+    "node": ">=22.23.4"
   }
 }
