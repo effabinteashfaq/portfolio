@@ -1,0 +1,69 @@
+# Corridor: certifications (newest first). The big mirror shows these details on hover.
+- id: htb-cdsa
+  order: 1
+  name: HTB Certified Defensive Security Analyst (CDSA)
+  issuer: Hack The Box
+  issued: 22 Sep 2026
+  verifyUrl: https://www.credly.com/badges/cb3eaba3-8257-4c86-b3e7-052e845c5151/public_url
+  badge: assets/badges/htb-cdsa.png
+  certificate: assets/certificates/htb-cdsa.png
+
+- id: iso27701-lead-auditor
+  order: 2
+  name: ISO/IEC 27701:2025 Lead Auditor
+  issuer: Mastermind Assurance
+  issued: 7 Sep 2026
+  validUntil: 6 Sep 2029
+  credentialId: wrhz1vtvfy
+  verifyUrl: https://learn.mastermindassurance.com/certificates/wrhz1vtvfy
+  badge: assets/badges/iso27701-lead-auditor.png
+  certificate: assets/certificates/iso27701-lead-auditor.png
+
+- id: secops-cbtp
+  order: 3
+  name: Certified Blue Team Practitioner (CBTP), with Merit
+  issuer: The SecOps Group
+  issued: 11 Mar 2026
+  credentialId: "11189317"
+  verifyNote: SecOps validation portal
+  badge: assets/badges/secops-cbtp.png
+
+- id: iso27001-lead-auditor
+  order: 4
+  name: ISO/IEC 27001:2022 Lead Auditor
+  issuer: Mastermind Assurance
+  issued: 15 Apr 2025
+  validUntil: 14 Apr 2028
+  credentialId: tqi3gnj3dy
+  verifyUrl: https://learn.mastermindassurance.com/certificates/tqi3gnj3dy
+  badge: assets/badges/iso27001-lead-auditor.png
+  certificate: assets/certificates/iso27001-lead-auditor.png
+
+- id: secops-cap
+  order: 5
+  name: Certified AppSec Practitioner (CAP), with Merit
+  issuer: The SecOps Group
+  issued: 12 Mar 2025
+  credentialId: "9750971"
+  verifyNote: SecOps validation portal
+  badge: assets/badges/secops-cap.png
+  certificate: assets/certificates/secops-cap.png
+
+- id: cisco-cyber-threat-management
+  order: 6
+  name: Cyber Threat Management
+  issuer: Cisco Networking Academy
+  issued: 31 Aug 2024
+  verifyUrl: https://www.credly.com/badges/f339e919-9bdc-4aff-ac6a-1d25ef1cb548/public_url
+  badge: assets/badges/cisco-cyber-threat-management.png
+  certificate: assets/certificates/cisco-cyber-threat-management.png
+
+- id: skillfront-iso27001-associate
+  order: 7
+  name: ISO/IEC 27001:2022 Information Security Associate
+  issuer: SkillFront
+  issued: 21 Feb 2024
+  credentialId: "53738487320824"
+  verifyUrl: https://www.skillfront.com/Badges/53738487320824
+  # no badge: the frame uses a crop of the certificate
+  certificate: assets/certificates/skillfront-iso27001-associate.png

@@ -1,0 +1,18 @@
+# Corridor: CVE frame. Heading: "Security research and disclosures"
+- id: CVE-2026-112339
+  order: 1
+  product: Wazuh
+  ghsa: GHSA-v8ww-qhjh-j6w9
+  severity: Moderate, CVSS 5.9
+  date: Nov 2026
+  url: https://github.com/wazuh/wazuh/security/advisories/GHSA-v8ww-qhjh-j6w9
+  description: Reported missing TLS hostname verification in the fluent-forward module that let any certificate from the configured CA impersonate the Fluentd collector and receive forwarded security telemetry. Patched in 4.14.9.
+
+- id: CVE-2026-66874
+  order: 2
+  product: Gitea
+  ghsa: GHSA-5xp7-r6cr-39ff
+  severity: Moderate, CVSS 6.5
+  date: Aug 2026
+  url: https://github.com/go-gitea/gitea/security/advisories/GHSA-5xp7-r6cr-39ff
+  description: Reported a flaw that let a fork pull request author pass a required status check without any workflow running, bypassing branch protection. Patched in Gitea 1.27.3.

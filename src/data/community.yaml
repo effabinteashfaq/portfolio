@@ -1,0 +1,28 @@
+# Veranda: community (Mehfil)
+- id: fast-guest-speaker
+  order: 1
+  role: Guest Speaker
+  where: '"The Art of Cyber Defense", FAST'
+  dates: Nov 2026
+  line: A hands-on workshop on blue teaming and my CDSA journey, for a group of women students.
+
+- id: aucss-research-lead
+  order: 2
+  role: Lead, Research Club
+  where: Air University Cyber Security Society (AUCSS), National Cyber Security Academy (NCSA)
+  dates: Mar 2025 – Mar 2026
+  line: Mentored 25+ students through research projects in malware analysis, AI/ML, threat intelligence and forensics.
+
+- id: pcc-organiser
+  order: 3
+  role: Organiser
+  where: Pakistan Cybersecurity Challenge (PCC), National Centre for Cyber Security (NCCS)
+  dates: 2023, 2024, 2025
+  line: Organised and coordinated PCC three years in a row, with appreciation certificates for event management.
+
+- id: aucss-wicss-member
+  order: 4
+  role: Member
+  where: AUCSS and WiCSS
+  dates: 2023 – 2026
+  line: Helped run women-focused cybersecurity workshops and CTFs at NCSA in collaboration with National CERT.

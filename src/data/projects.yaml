@@ -1,0 +1,34 @@
+# Workshop: projects.
+# shelf: "finished" = Finished pieces, "workbench" = On the workbench
+# Leave link out until there is one; the site hides missing links.
+- id: deeptrace
+  order: 1
+  shelf: finished
+  name: DeepTrace
+  stack: Python, D3, Flask
+  date: May 2026
+  line: "My final year project that outlived the viva: IPDR-based threat detection, used in real assessments."
+  # link: (public GitHub repo, coming from Effa)
+
+- id: adsscanner
+  order: 2
+  shelf: finished
+  name: ADSScanner Detection Tool
+  stack: Python
+  date: Oct 2025
+  line: Every NTFS file can have a hidden drawer. This script opens them all.
+  # screenshots: (coming from Effa)
+
+- id: khaaka
+  order: 3
+  shelf: workbench
+  featured: true
+  name: Khaaka
+  version: v1.3
+  line: Pick your standards, answer each control, get a gap report with fixes. Pre-audit, minus the panic.
+  # lastUpdated: (date for the log-style "last updated" line, coming from Effa)
+
+- { id: compliance-as-code, order: 4, shelf: workbench, name: Compliance-as-code monitoring, status: Planned }
+- { id: policy-gap-analyzer, order: 5, shelf: workbench, name: Policy gap analyzer, status: Planned }
+- { id: detection-as-code, order: 6, shelf: workbench, name: Detection-as-code pipeline, status: Planned }
+- { id: detection-control-mapper, order: 7, shelf: workbench, name: Detection-to-control coverage mapper, status: Planned }

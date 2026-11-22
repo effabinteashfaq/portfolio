@@ -1,0 +1,34 @@
+# Study: papers. Titles only, no co-authors.
+# marker: "seal" = wax seal (published), "ribbon" = gold ribbon (awarded), "inkblot" = in review / submitted
+- id: evolution-cybercrime
+  order: 1
+  title: Evolution Cybercrime—Key Trends, Cybersecurity Threats, and Mitigation Strategies from Historical Data
+  venue: MDPI Analytics
+  date: 18 Sep 2025
+  status: Published
+  award: Editor's Choice Award (MDPI Analytics)
+  markers: [seal, ribbon]
+  line: What two decades of attacks teach us about the next ones. Editor's Choice, MDPI Analytics.
+  certificate: assets/certificates/mdpi-editors-choice.png
+
+- id: lattice-pqc
+  order: 2
+  title: "Lattice-Based Cryptography for Post-Quantum Security: Foundations, Schemes, Attacks, Implementations, Standardization, and Future Directions"
+  status: In review
+  markers: [inkblot]
+  line: A tour of the cryptography meant to survive quantum computers, and the attacks that test it.
+  writeup: lattice-cryptography-without-the-heavy-maths
+
+- id: trust-aware-dp-fl
+  order: 3
+  title: A Trust-Aware Differential Privacy Framework for Privacy-Aware Federated Learning in Healthcare
+  status: In review
+  markers: [inkblot]
+  line: Letting hospitals train models together without handing over patient data.
+
+- id: blockchain-wsn-localization
+  order: 4
+  title: A Blockchain Based Hybrid Localization Scheme for Wireless Sensor Networks Using Distance Vector Hop and Received Signal Strength Indicator
+  status: Submitted
+  markers: [inkblot]
+  line: Helping sensor networks work out where each node is, with blockchain keeping the answers honest.

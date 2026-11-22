@@ -1,0 +1,16 @@
+# Study: degrees (shown as two bound volumes / postcards)
+- id: bs-cybersecurity
+  order: 1
+  degree: BS Cybersecurity
+  school: Air University
+  years: 2022–2026
+  line: Four years of labs, late library nights and society events, ending with DeepTrace and a handful of memories I'm keeping forever.
+
+- id: ms-information-security
+  order: 2
+  degree: Masters in Information Security
+  school: Military College of Signals, NUST
+  years: 2026–present
+  line: "Chapter two: deeper into cryptography, research and the maths behind the controls."
+  postcard: assets/figures/mcs-postcard.svg
+  stamp: assets/figures/mcs-emblem.png

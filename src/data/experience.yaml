@@ -1,0 +1,15 @@
+# Veranda: experience, newest first
+- id: haumaru-whanau
+  order: 1
+  role: GRC Intern
+  org: Haumaru Whānau
+  location: remote
+  dates: Jul 2026 – Sep 2026
+  line: Translated ISO 27001, PCI DSS and Saudi regulations into controls, policies and audit-ready evidence.
+
+- id: national-cert
+  order: 2
+  role: GRC Analyst
+  org: National CERT Pakistan
+  dates: May 2025 – Aug 2025
+  line: "From audit checklists to stakeholder dashboards: national-standard GRC work across 15+ institutions."

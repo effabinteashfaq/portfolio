@@ -1,0 +1,32 @@
+# Workshop: "The toolkit", exactly as set in the Journey mockup.
+- id: blue-team
+  order: 1
+  title: Blue team
+  subtitle: Detection, hunting and investigation
+  icon: shield
+  color: "#3B4F7D"
+  tags: [SIEM & log analysis, Threat hunting, Windows & Active Directory attack analysis, Network traffic analysis & IDS, Malware analysis, DFIR, Incident reporting]
+
+- id: grc
+  order: 2
+  title: GRC
+  subtitle: Governance, risk and compliance
+  icon: document
+  color: "#2F5D50"
+  tags: [Security audits & compliance, Risk assessment & treatment, Control mapping & governance, Policy development, Audit preparation & evidence, Security documentation]
+
+- id: frameworks
+  order: 3
+  title: Frameworks
+  subtitle: Standards I have worked with
+  icon: book
+  color: "#C8961E"
+  tags: [ISO/IEC 27001, ISO/IEC 27701, PCI DSS, PDPL (KSA), SAMA]
+
+- id: tools
+  order: 4
+  title: Tools
+  subtitle: What I reach for
+  icon: wrench
+  color: "#C0623A"
+  tags: [Splunk, Elastic Stack / Kibana, Wireshark, Sysmon, Sigma, YARA, Volatility, Autopsy, FTK Imager, KAPE, Burp Suite, Nmap, Metasploit]

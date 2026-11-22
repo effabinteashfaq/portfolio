@@ -1,0 +1,6 @@
+# Study: research interests. Heading: "What keeps me up at night"
+- { id: network, order: 1, name: Network security and traffic analysis }
+- { id: forensics, order: 2, name: Digital forensics }
+- { id: crypto, order: 3, name: Cryptography }
+- { id: governance, order: 4, name: Security governance and risk }
+- { id: privacy, order: 5, name: Privacy-preserving systems }
