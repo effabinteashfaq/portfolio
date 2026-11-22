@@ -80,7 +80,7 @@ body {
   overflow-x: hidden;
 }
 
-img, svg { max-width: 100%; }
+img, :not(svg) > svg { max-width: 100%; }
 
 a { color: var(--pine); }
 a:hover { color: var(--ink); }
@@ -93,7 +93,7 @@ a:hover { color: var(--ink); }
 
 section[id] { scroll-margin-top: var(--bar-height); }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 600;
   margin: 0;

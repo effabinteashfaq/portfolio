@@ -6,12 +6,14 @@ import Patchwork from './Patchwork.astro';
 interface Props {
   from: string;   // background colour of the room above
   to: string;     // background colour of the room below
+  via?: string;   // optional colour the fade passes through
   urdu: string;   // Urdu name of the next room
   next: string;   // English name of the next room, e.g. "the Study"
 }
-const { from, to, urdu, next } = Astro.props;
+const { from, to, via, urdu, next } = Astro.props;
+const fade = via ? `${from}, ${via}, ${to}` : `${from}, ${to}`;
 ---
-<div class="threshold" aria-hidden="true" style={`--from:${from};--to:${to}`}>
+<div class="threshold" aria-hidden="true" style={`--fade:${fade}`}>
   <Patchwork />
   <span class="threshold__line">onward to <span class="urdu" lang="ur" dir="rtl">{urdu}</span> · {next}</span>
 </div>
@@ -21,7 +23,7 @@ const { from, to, urdu, next } = Astro.props;
     position: relative;
     height: 200px;
     overflow: hidden;
-    background: linear-gradient(var(--from), var(--to));
+    background: linear-gradient(var(--fade));
     display: flex;
     flex-direction: column;
     align-items: center;

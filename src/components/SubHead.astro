@@ -1,0 +1,30 @@
+---
+// Smaller heading inside a room: "Taleem  تعلیم  Degrees"
+interface Props {
+  title: string;
+  urdu?: string;
+  english?: string;
+  id?: string;
+  level?: 2 | 3 | 4;
+}
+const { title, urdu, english, id, level = 3 } = Astro.props;
+const Tag = `h${level}`;
+---
+<div class="subhead">
+  <Tag id={id} class="subhead__title">{title}</Tag>
+  {urdu && <span class="urdu subhead__urdu" lang="ur" dir="rtl">{urdu}</span>}
+  {english && <span class="subhead__english">{english}</span>}
+  <slot />
+</div>
+
+<style>
+  .subhead { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; }
+  .subhead__title { font-size: clamp(34px, 5.5vw, 46px); line-height: 1.1; }
+  .subhead__urdu { font-size: 24px; line-height: 2; color: var(--subhead-urdu, var(--pine)); }
+  .subhead__english {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 21px;
+    color: var(--subhead-english, var(--ink-muted));
+  }
+</style>

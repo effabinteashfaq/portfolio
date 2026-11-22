@@ -1,0 +1,191 @@
+---
+// The Workshop: daytime scene, the toolkit (skills), finished pieces, on the workbench.
+import { getCollection } from 'astro:content';
+import RoomHead from '../RoomHead.astro';
+import Scene from '../Scene.astro';
+import SubHead from '../SubHead.astro';
+
+const byOrder = (a: any, b: any) => a.data.order - b.data.order;
+const skills = (await getCollection('skills')).sort(byOrder);
+const projects = (await getCollection('projects')).sort(byOrder);
+const finished = projects.filter((p) => p.data.shelf === 'finished');
+const bench = projects.filter((p) => p.data.shelf === 'workbench');
+const featured = bench.find((p) => p.data.featured);
+const planned = bench.filter((p) => !p.data.featured);
+
+// Tag colours for each toolkit card
+const tagTint: Record<string, [string, string]> = {
+  'blue-team': ['#E7ECF6', '#2B3A5E'],
+  grc: ['#E3F0EA', '#24493F'],
+  frameworks: ['#FBEFCF', '#6B4A12'],
+  tools: ['#F8E3D8', '#7A3518'],
+};
+const icons: Record<string, string> = {
+  shield: '<path d="M12 3 L19 6 V11 C19 15.5 16 19 12 21 C8 19 5 15.5 5 11 V6 Z"/><path d="M9 12 L11 14 L15 10"/>',
+  document: '<path d="M7 3 H17 A2 2 0 0 1 19 5 V19 A2 2 0 0 1 17 21 H7 A2 2 0 0 1 5 19 V5 A2 2 0 0 1 7 3 Z"/><path d="M9 8 H15 M9 12 H15 M9 16 H13"/>',
+  book: '<path d="M4 5 C7 4 10 4.5 12 6 C14 4.5 17 4 20 5 V19 C17 18 14 18.5 12 20 C10 18.5 7 18 4 19 Z"/><path d="M12 6 V20"/>',
+  wrench: '<path d="M14.5 5.5 A4 4 0 0 0 9.8 10.6 L4 16.4 L7.6 20 L13.4 14.2 A4 4 0 0 0 18.5 9.5 L16 12 L12 8 Z"/>',
+};
+const benchAccents = ['#2F5D50', '#3B4F7D', '#C0623A', '#C8961E'];
+---
+<section id="workshop" aria-labelledby="workshop-title" class="workshop">
+  <RoomHead id="workshop-title" urdu="کارخانہ" title="The Workshop" intro="Where the tools get built, between parathas and the odd painting left half finished." />
+
+  <div class="workshop__scene">
+    <Scene name="workshop" fade="soft" />
+  </div>
+
+  <!-- The toolkit -->
+  <div class="wrap workshop__block">
+    <SubHead title="The toolkit" urdu="اوزار" english="Skills" />
+    <div class="toolkit">
+      {skills.map((s) => {
+        const [bg, ink] = tagTint[s.id] ?? ['#EEE', '#333'];
+        return (
+          <article class="tool" style={`--accent:${s.data.color};--tag-bg:${bg};--tag-ink:${ink}`}>
+            <div class="tool__head">
+              <svg class="tool__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke={s.data.color} stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[s.data.icon]} />
+              <div>
+                <h4 class="tool__title">{s.data.title}</h4>
+                <span class="tool__sub">{s.data.subtitle}</span>
+              </div>
+            </div>
+            <ul class="tags">
+              {s.data.tags.map((t) => <li>{t}</li>)}
+            </ul>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+
+  <!-- Finished pieces -->
+  <div class="wrap workshop__block">
+    <SubHead title="Finished pieces" />
+    <ul class="pieces">
+      {finished.map((p) => {
+        const Tag = p.data.link ? 'a' : 'div';
+        return (
+          <li>
+            <Tag class="piece" href={p.data.link} rel={p.data.link ? 'noopener' : undefined}>
+              <h4 class="piece__name">{p.data.name}</h4>
+              <p class="piece__line">{p.data.line}</p>
+              <span class="piece__meta">{p.data.stack} · {p.data.date}</span>
+            </Tag>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+
+  <!-- On the workbench -->
+  <div class="wrap workshop__block workshop__block--last">
+    <SubHead title="On the workbench" />
+    {featured && (
+      <article class="khaaka">
+        <div class="khaaka__text">
+          <div class="khaaka__top">
+            <span class="urdu khaaka__urdu" lang="ur" dir="rtl">خاکہ</span>
+            {featured.data.version && <span class="khaaka__pill">{featured.data.version}</span>}
+          </div>
+          <h4 class="khaaka__name">{featured.data.name}</h4>
+          <p class="khaaka__line">{featured.data.line}</p>
+          {featured.data.lastUpdated && (
+            <p class="khaaka__log mono"><span>[INFO]</span> last updated: {featured.data.lastUpdated}</p>
+          )}
+        </div>
+        <div class="terminal mono" aria-hidden="true">
+          <div class="t-mint">$ khaaka assess --standards iso27001</div>
+          <div>[...] answering controls</div>
+          <div><span class="t-mint">met</span>     ███████████░░░</div>
+          <div><span class="t-gold">partial</span> ███░░░░░░░░░░░</div>
+          <div><span class="t-pink">gap</span>     ██░░░░░░░░░░░░</div>
+          <div class="t-gold">→ gap report ready</div>
+        </div>
+      </article>
+    )}
+    <ul class="planned">
+      {planned.map((p, i) => (
+        <li class="plan" style={`--accent:${benchAccents[i % benchAccents.length]}`}>
+          <span class="plan__status">{p.data.status}</span>
+          <h4 class="plan__name">{p.data.name}</h4>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .workshop { background: var(--paper); }
+  .workshop__scene { max-width: 1440px; margin: 0 auto; }
+  .workshop__block { padding-top: 64px; display: flex; flex-direction: column; gap: 24px; }
+  .workshop__block--last { padding-bottom: 96px; }
+
+  .toolkit { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 22px; }
+  .tool {
+    background: #FBF7EE;
+    border: 1px solid var(--paper-line);
+    border-top: 6px solid var(--accent);
+    border-radius: 18px;
+    padding: 24px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .tool__head { display: flex; align-items: center; gap: 12px; }
+  .tool__icon { width: 28px; height: 28px; flex: none; }
+  .tool__title { font-size: 26px; line-height: 1.1; }
+  .tool__sub { font-size: 13px; color: var(--ink-muted); }
+  .tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .tags li { font-size: 14px; font-weight: 500; background: var(--tag-bg); color: var(--tag-ink); padding: 6px 12px; border-radius: 6px; }
+
+  .pieces { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .piece {
+    display: flex; flex-wrap: wrap; align-items: baseline;
+    gap: 8px 24px;
+    padding: 22px 0;
+    border-top: 1px solid var(--paper-line);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  a.piece:hover .piece__name { color: var(--pine); text-decoration: underline; }
+  .piece__name { flex: 0 1 300px; font-size: 28px; line-height: 1.15; }
+  .piece__line { flex: 1 1 420px; margin: 0; color: var(--ink-soft); }
+  .piece__meta { font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-muted); }
+
+  .khaaka {
+    background: #FBF7EE;
+    border: 1px solid var(--paper-line);
+    border-radius: 22px;
+    padding: clamp(20px, 3vw, 32px);
+    display: flex; flex-wrap: wrap; gap: 32px; align-items: center;
+  }
+  .khaaka__text { flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+  .khaaka__top { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+  .khaaka__urdu { font-size: 32px; color: var(--pine); }
+  .khaaka__pill { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; background: #FBE7A8; color: #6B4A12; padding: 5px 12px; border-radius: 999px; }
+  .khaaka__name { font-size: 40px; line-height: 1.05; }
+  .khaaka__line { margin: 0; color: var(--ink-soft); max-width: 560px; }
+  .khaaka__log { margin: 0; font-size: 13px; color: var(--ink-muted); }
+  .khaaka__log span { color: var(--pine); }
+  .terminal {
+    flex: 1 1 300px; min-width: 0;
+    background: var(--ink); color: #BFC8DA;
+    border-radius: 16px; padding: 18px 20px;
+    font-size: 13px; line-height: 1.9;
+    white-space: pre; overflow-x: auto;
+  }
+  .t-mint { color: var(--mint); }
+  .t-gold { color: #F3D27A; }
+  .t-pink { color: #E9A3B6; }
+
+  .planned { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 22px; }
+  .plan {
+    background: #FBF7EE;
+    border: 1px dashed #C9B48E;
+    border-top: 6px solid var(--accent);
+    border-radius: 18px;
+    padding: 22px 24px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .plan__status { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-muted); }
+  .plan__name { font-size: 25px; line-height: 1.15; }
+</style>

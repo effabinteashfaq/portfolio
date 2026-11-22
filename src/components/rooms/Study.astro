@@ -1,0 +1,223 @@
+---
+// The Study: night scene, degrees as postcards, papers, research interests.
+import { getCollection } from 'astro:content';
+import RoomHead from '../RoomHead.astro';
+import Scene from '../Scene.astro';
+import SubHead from '../SubHead.astro';
+import Marker from '../Marker.astro';
+import AssetImage from '../AssetImage.astro';
+import mcsPostcard from '../../../assets/figures/mcs-postcard.svg?raw';
+
+const byOrder = (a: any, b: any) => a.data.order - b.data.order;
+const degrees = (await getCollection('degrees')).sort(byOrder);
+const papers = (await getCollection('papers')).sort(byOrder);
+const interests = (await getCollection('interests')).sort(byOrder);
+
+// Postcard dressing per degree (from the mockup)
+const dressing: Record<string, { city: string; ink: string; tilt: number }> = {
+  'bs-cybersecurity': { city: 'Islamabad', ink: '#3B4F7D', tilt: -0.6 },
+  'ms-information-security': { city: 'Rawalpindi', ink: '#2F6B3F', tilt: 0.6 },
+};
+const interestColours = ['#3B4F7D', '#3F7A64', '#8C3B4E', '#9E4A28', '#5B4A82'];
+const kicker = (p: any) => [p.data.status, p.data.venue, p.data.date].filter(Boolean).join(' · ');
+---
+<section id="study" aria-labelledby="study-title" class="study">
+  <RoomHead dark id="study-title" urdu="مطالعہ" title="The Study" intro="Late nights, a lantern, and papers that took longer than planned." />
+
+  <div class="study__scene">
+    <Scene name="study" fade="soft" />
+  </div>
+
+  <!-- Degrees -->
+  <div class="wrap study__block">
+    <SubHead title="Taleem" urdu="تعلیم" english="Degrees" />
+    {degrees.map((d) => {
+      const dr = dressing[d.id];
+      const isMs = d.id === 'ms-information-security';
+      return (
+        <article class="postcard" style={`--tilt:${dr.tilt}deg`}>
+          <div class="postcard__front">
+            {isMs ? <Fragment set:html={mcsPostcard} /> : <Scene name="air-university-postcard" />}
+          </div>
+          <div class="postcard__back">
+            <div class="postcard__top">
+              <span class="postcard__greeting">Greetings from {dr.city} · {d.data.years}</span>
+              {isMs ? (
+                <div class="stamp stamp--emblem" aria-hidden="true">
+                  <AssetImage src="assets/figures/mcs-emblem.png" alt="" width={42} />
+                  <span>PAKISTAN</span>
+                </div>
+              ) : (
+                <svg class="stamp" viewBox="0 0 70 84" aria-hidden="true" focusable="false"><rect x="2" y="2" width="66" height="80" fill="#FBF4E6" stroke="#C0623A" stroke-width="2" stroke-dasharray="4 3"/><rect x="10" y="10" width="50" height="50" fill="#7FB9DD"/><path d="M10 50 L24 34 L34 44 L46 28 L60 46 V60 H10 Z" fill="#2E6AA3"/><text x="35" y="74" text-anchor="middle" font-family="Karla, sans-serif" font-size="9" font-weight="700" fill="#C0623A">PAKISTAN</text></svg>
+              )}
+            </div>
+            <h4 class="postcard__degree">{d.data.degree}</h4>
+            <p class="postcard__school">{d.data.school}</p>
+            <p class="postcard__line">{d.data.line}</p>
+            <svg class="postmark" viewBox="0 0 120 60" aria-hidden="true" focusable="false"><circle cx="30" cy="30" r="24" fill="none" stroke={dr.ink} stroke-width="2"/><text x="30" y="27" text-anchor="middle" font-family="Karla, sans-serif" font-size="6.5" font-weight="700" fill={dr.ink}>{dr.city.toUpperCase()}</text><text x="30" y="38" text-anchor="middle" font-family="Karla, sans-serif" font-size="7" fill={dr.ink}>2026</text><path d="M58 20 q8 -6 16 0 t16 0 t16 0 M58 30 q8 -6 16 0 t16 0 t16 0 M58 40 q8 -6 16 0 t16 0 t16 0" stroke={dr.ink} stroke-width="1.5" fill="none"/></svg>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+
+  <!-- Research -->
+  <div class="wrap study__block">
+    <SubHead title="Research" urdu="تحقیق">
+      <ul class="legend" aria-label="What the markers mean">
+        <li><Marker kind="seal" size={20} />Published</li>
+        <li><Marker kind="ribbon" size={22} />Awarded</li>
+        <li><Marker kind="inkblot" size={20} />Under review / in progress</li>
+      </ul>
+    </SubHead>
+    <div class="papers">
+      {papers.map((p) => (
+        <article class="paper" id={`paper-${p.id}`}>
+          <div class="paper__markers">
+            {p.data.markers.map((m) => <Marker kind={m} />)}
+          </div>
+          <div class="paper__text">
+            <span class="paper__kicker">{kicker(p)}</span>
+            <h4 class="paper__title">{p.data.title}</h4>
+            <p class="paper__line">{p.data.line}</p>
+            {p.data.award && <p class="paper__award">{p.data.award}</p>}
+            {p.data.writeup && (
+              <a class="paper__link" href={`/writeups/${p.data.writeup}/`}>Read it in the Library →</a>
+            )}
+          </div>
+          {p.data.certificate && (
+            <a class="paper__cert" href={`#cert-${p.id}`} aria-label={`View the ${p.data.award} certificate`}>
+              <AssetImage src={p.data.certificate} alt="" width={150} />
+            </a>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+
+  <!-- Interests -->
+  <div class="wrap study__block study__block--last">
+    <h3 class="interests__title">What keeps me up at night</h3>
+    <ul class="interests">
+      {interests.map((i, n) => (
+        <li style={`--chip:${interestColours[n % interestColours.length]}`}>{i.data.name}</li>
+      ))}
+    </ul>
+  </div>
+
+  {papers.filter((p) => p.data.certificate).map((p) => (
+    <div class="lightbox" id={`cert-${p.id}`} role="dialog" aria-label={`${p.data.award} certificate`}>
+      <a class="lightbox__backdrop" href={`#paper-${p.id}`} aria-label="Close"></a>
+      <figure class="lightbox__frame">
+        <AssetImage src={p.data.certificate!} alt={`${p.data.award} certificate for the paper “${p.data.title}”`} width={720} />
+        <a class="lightbox__close" href={`#paper-${p.id}`}>Close</a>
+      </figure>
+    </div>
+  ))}
+</section>
+
+<style>
+  .study {
+    background: var(--night);
+    color: var(--paper);
+    --subhead-urdu: var(--mustard);
+    --subhead-english: var(--night-text);
+  }
+  .study__scene { max-width: 1440px; margin: 0 auto; }
+  .study__block { padding-top: 64px; display: flex; flex-direction: column; gap: 26px; }
+  .study__block--last { padding-bottom: 96px; }
+
+  /* Postcards */
+  .postcard {
+    background: #F6EEDC;
+    color: var(--ink);
+    border-radius: 6px;
+    padding: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px 0;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.4);
+    transform: rotate(var(--tilt));
+  }
+  .postcard__front { flex: 1 1 420px; min-width: 0; border: 6px solid #FFFFFF; outline: 1px solid #D8CDB6; }
+  .postcard__front :global(svg) { display: block; width: 100%; height: auto; }
+  .postcard__back {
+    flex: 1 1 320px;
+    min-width: 0;
+    position: relative;
+    padding: 18px 26px;
+    margin-left: 18px;
+    border-left: 1px dashed #C9B48E;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .postcard__top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .postcard__greeting { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-muted); }
+  .stamp { width: 60px; height: 72px; flex: none; }
+  .stamp--emblem {
+    box-sizing: border-box;
+    background: #FBF4E6;
+    border: 2px dashed #2F6B3F;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  }
+  .stamp--emblem :global(img) { width: 42px; height: 42px; display: block; }
+  .stamp--emblem span { font-size: 8px; font-weight: 700; letter-spacing: 0.5px; color: #2F6B3F; }
+  .postcard__degree { font-size: clamp(28px, 4vw, 34px); line-height: 1.1; }
+  .postcard__school { margin: 0; font-weight: 700; color: var(--pine); }
+  .postcard__line { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 20px; line-height: 1.45; color: var(--ink-soft); }
+  .postmark { position: absolute; right: 90px; top: 36px; width: 96px; height: 48px; opacity: 0.5; pointer-events: none; }
+
+  @media (max-width: 760px) {
+    .postcard { transform: none; padding: 12px; }
+    .postcard__back { margin-left: 0; border-left: 0; border-top: 1px dashed #C9B48E; padding: 16px 6px 6px; }
+    .postmark { right: 4px; top: auto; bottom: 4px; }
+  }
+
+  /* Research */
+  .legend { list-style: none; margin: 0 0 0 auto; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; color: var(--night-text); }
+  .legend li { display: flex; align-items: center; gap: 8px; }
+  .legend :global(.marker[viewBox="0 0 64 64"]) { background: var(--paper); border-radius: 50%; }
+  .papers { display: flex; flex-direction: column; gap: 18px; }
+  .paper {
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 16px;
+    padding: 26px 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 24px;
+    align-items: flex-start;
+  }
+  .paper__markers { display: flex; gap: 6px; align-items: flex-start; }
+  .paper__text { flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+  .paper__kicker { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-muted); }
+  .paper__title { font-size: clamp(22px, 3vw, 27px); line-height: 1.2; }
+  .paper__line { margin: 0; color: var(--ink-soft); }
+  .paper__award { margin: 0; font-size: 14px; font-weight: 700; color: #8A6512; }
+  .paper__link { font-weight: 700; font-size: 15px; }
+  .paper__cert { flex: none; display: block; border: 4px solid #FFFFFF; box-shadow: 0 6px 14px rgba(0,0,0,0.18); transform: rotate(2deg); transition: transform 0.25s ease; }
+  .paper__cert:hover, .paper__cert:focus-visible { transform: rotate(0deg) scale(1.03); }
+  .paper__cert :global(img) { display: block; width: 150px; height: auto; }
+
+  /* Interests */
+  .interests__title { font-size: 34px; }
+  .interests { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; }
+  .interests li {
+    background: var(--chip);
+    border-left: 5px solid var(--mustard);
+    border-radius: 4px;
+    padding: 8px 18px;
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 600;
+  }
+
+  /* Certificate lightbox (works without JavaScript, via #target) */
+  .lightbox { display: none; position: fixed; inset: 0; z-index: 80; align-items: center; justify-content: center; padding: 16px; }
+  .lightbox:target { display: flex; }
+  .lightbox__backdrop { position: absolute; inset: 0; background: rgba(20, 18, 34, 0.82); }
+  .lightbox__frame { position: relative; margin: 0; max-width: min(720px, 100%); background: var(--paper); padding: 12px; border-radius: 8px; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+  .lightbox__frame :global(img) { display: block; width: 100%; height: auto; }
+  .lightbox__close { color: var(--ink); font-weight: 700; padding: 6px 12px; }
+</style>

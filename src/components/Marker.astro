@@ -1,0 +1,17 @@
+---
+// Paper status markers: wax seal (published), gold ribbon (awarded), ink blot (in review).
+interface Props { kind: 'seal' | 'ribbon' | 'inkblot'; size?: number }
+const { kind, size = 58 } = Astro.props;
+---
+{kind === 'seal' && (
+  <svg class="marker" width={size} height={size} viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32 4 C40 6 44 2 50 8 C56 14 58 18 60 26 C62 34 58 40 56 46 C52 54 46 58 38 60 C30 62 24 60 18 56 C10 52 6 46 4 38 C2 30 6 22 10 16 C16 8 24 2 32 4 Z" fill="#B0262C"/><circle cx="32" cy="32" r="18" fill="none" stroke="#E7C873" stroke-width="2"/><path d="M32 20 L35 29 L44 29 L37 34 L40 43 L32 38 L24 43 L27 34 L20 29 L29 29 Z" fill="#E7C873"/></svg>
+)}
+{kind === 'ribbon' && (
+  <svg class="marker" width={size * 0.45} height={size} viewBox="0 0 28 64" aria-hidden="true" focusable="false"><path d="M2 0 H26 V60 L14 50 L2 60 Z" fill="#E7C873"/><path d="M6 0 V52 M22 0 V52" stroke="#C8961E" stroke-width="1.5"/></svg>
+)}
+{kind === 'inkblot' && (
+  <svg class="marker" width={size} height={size} viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M18 22 C22 10 40 8 46 18 C54 18 58 28 52 34 C56 42 48 50 40 46 C34 54 22 52 20 44 C10 44 8 32 14 28 C10 24 14 20 18 22 Z" fill="#1F2A44"/><circle cx="54" cy="50" r="4" fill="#1F2A44"/><circle cx="10" cy="52" r="2.5" fill="#1F2A44"/><path d="M40 4 L26 40" stroke="#C9A15E" stroke-width="4" stroke-linecap="round"/></svg>
+)}
+<style>
+  .marker { flex: none; display: block; }
+</style>

@@ -1,0 +1,80 @@
+---
+// The Veranda: experience cards (Tajurba), then community (Mehfil) beside a gallery wall.
+import { getCollection } from 'astro:content';
+import RoomHead from '../RoomHead.astro';
+import SubHead from '../SubHead.astro';
+import Scene from '../Scene.astro';
+
+const byOrder = (a: any, b: any) => a.data.order - b.data.order;
+const experience = (await getCollection('experience')).sort(byOrder);
+const community = (await getCollection('community')).sort(byOrder);
+const accents = ['#2F5D50', '#C0623A', '#3B4F7D', '#C8961E'];
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+---
+<section id="veranda" aria-labelledby="veranda-title" class="veranda">
+  <RoomHead id="veranda-title" urdu="برآمدہ" title="The Veranda" intro="Where the work happens with other people: jobs, teams, the society, and the odd paper garland." />
+
+  <div class="wrap veranda__block">
+    <SubHead title="Tajurba" urdu="تجربہ" english="Experience" />
+    <div class="jobs">
+      {experience.map((e, i) => (
+        <article class="job" style={`--accent:${accents[i % accents.length]}`}>
+          <span class="job__when">{e.data.dates}{e.data.location && ` · ${cap(e.data.location)}`}</span>
+          <h4 class="job__role">{e.data.role}</h4>
+          <span class="job__org">{e.data.org}</span>
+          <p class="job__line">{e.data.line}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+
+  <div class="wrap veranda__block veranda__mehfil">
+    <div class="mehfil__text">
+      <SubHead title="Mehfil" urdu="محفل" english="Community" />
+      <ul class="mehfil">
+        {community.map((c) => (
+          <li>
+            <span class="mehfil__role">{c.data.role}</span>
+            <span class="mehfil__where">{c.data.where} · {c.data.dates}</span>
+            <span class="mehfil__line">{c.data.line}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="mehfil__wall">
+      <Scene name="gallery-wall" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .veranda { background: var(--paper); padding-bottom: 96px; }
+  .veranda__block { padding-top: 64px; display: flex; flex-direction: column; gap: 24px; }
+
+  .jobs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 24px; }
+  .job {
+    background: #FBF7EE;
+    border: 1px solid var(--paper-line);
+    border-top: 6px solid var(--accent);
+    border-radius: 18px;
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .job__when { font-size: 14px; font-weight: 700; color: var(--ink-muted); }
+  .job__role { font-size: 30px; line-height: 1.1; }
+  .job__org { font-weight: 700; color: var(--pine); }
+  .job__line { margin: 4px 0 0; color: var(--ink-soft); }
+
+  .veranda__mehfil { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 40px 56px; }
+  .mehfil__text { flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+  .mehfil { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .mehfil li { padding: 16px 0; border-top: 1px solid var(--paper-line); display: flex; flex-direction: column; gap: 2px; }
+  .mehfil__role { font-family: var(--font-display); font-size: 25px; font-weight: 600; line-height: 1.2; }
+  .mehfil__where { font-size: 14px; font-weight: 700; color: var(--pine); }
+  .mehfil__line { color: var(--ink-soft); }
+  /* the wall: never wider than half the section, roughly the height of the text */
+  .mehfil__wall { flex: 0 1 46%; min-width: min(300px, 100%); max-width: 540px; margin-left: auto; }
+  @media (max-width: 760px) { .mehfil__wall { flex-basis: 100%; margin: 0 auto; max-width: 420px; } }
+</style>

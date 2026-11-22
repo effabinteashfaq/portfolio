@@ -1,0 +1,62 @@
+---
+// One carved frame on the Corridor wall (shapes from the mockup).
+// The badge picture (or CVE label) sits over the mirror glass.
+interface Props {
+  shape: 'niche' | 'rect' | 'oval' | 'small';
+  paint: string;
+  shade: string;
+  trim: string;
+  empty?: boolean;     // empty frames stay as mirrors
+}
+const { shape, paint, shade, trim, empty = false } = Astro.props;
+const m = empty ? 1 : 0.35; // mirror glass shows through less when a badge hangs there
+---
+{shape === 'niche' && (
+  <svg viewBox="0 0 100 220" aria-hidden="true" focusable="false">
+    <path d="M25 40 Q25 10 50 4 Q75 10 75 40 Z" fill={paint}/><path d="M50 4 V-6" stroke="#D4A64A" stroke-width="3"/><circle cx="50" cy="-7" r="4" fill="#D4A64A"/>
+    <path d="M32 36 Q50 20 68 36" stroke={trim} stroke-width="2.5" fill="none"/>
+    <path d="M4 40 Q4 30 12 28 V40 Z M96 40 Q96 30 88 28 V40 Z" fill={paint}/>
+    <path d="M2 54 H98 L88 40 H12 Z" fill={paint}/><path d="M2 54 H98" stroke="#D4A64A" stroke-width="2.5"/>
+    <rect x="8" y="54" width="84" height="120" rx="3" fill={paint}/>
+    <rect x="8" y="54" width="14" height="120" fill={shade}/><rect x="78" y="54" width="14" height="120" fill={shade}/>
+    <path d="M24 168 V96 Q24 82 33 79 Q35 66 50 62 Q65 66 67 79 Q76 82 76 96 V168 Z" fill="#4A2E1A" stroke="#D4A64A" stroke-width="2.5"/>
+    <path d="M27 165 V98 Q27 86 35 83 Q37 71 50 66 Q63 71 65 83 Q73 86 73 98 V165 Z" fill="url(#mir)" opacity={m}/>
+    <path d="M0 174 H100 L90 190 H10 Z" fill={paint}/><path d="M0 174 H100" stroke="#D4A64A" stroke-width="2.5"/>
+    <path d="M28 190 H72 L58 214 H42 Z" fill={shade}/><circle cx="50" cy="219" r="5" fill="#D4A64A"/>
+    <circle cx="15" cy="110" r="3" fill={trim}/><circle cx="85" cy="110" r="3" fill={trim}/>
+  </svg>
+)}
+{shape === 'rect' && (
+  <svg viewBox="0 0 140 210" aria-hidden="true" focusable="false">
+    <path d="M38 22 Q70 -10 102 22 Z" fill={paint}/><circle cx="70" cy="2" r="5" fill="#D4A64A"/>
+    <path d="M14 22 Q20 10 28 22 Z M112 22 Q120 10 126 22 Z" fill={paint}/>
+    <rect x="4" y="20" width="132" height="176" rx="5" fill={paint}/>
+    <rect x="11" y="27" width="118" height="162" rx="3" fill="none" stroke={trim} stroke-width="2" stroke-dasharray="5 4"/>
+    <path d="M24 182 V78 Q24 58 44 52 Q56 36 70 32 Q84 36 96 52 Q116 58 116 78 V182 Z" fill="#4A2E1A" stroke="#D4A64A" stroke-width="3"/>
+    <path d="M28 178 V80 Q28 62 46 56 Q58 41 70 37 Q82 41 94 56 Q112 62 112 80 V178 Z" fill="url(#mir)" opacity={m}/>
+    <circle cx="14" cy="30" r="4" fill="#D4A64A"/><circle cx="126" cy="30" r="4" fill="#D4A64A"/><circle cx="14" cy="186" r="4" fill="#D4A64A"/><circle cx="126" cy="186" r="4" fill="#D4A64A"/>
+    <path d="M20 196 H120 L110 206 H30 Z" fill={shade}/>
+  </svg>
+)}
+{shape === 'oval' && (
+  <svg viewBox="0 0 84 190" aria-hidden="true" focusable="false">
+    <path d="M26 22 Q42 -4 58 22 Z" fill={paint}/><circle cx="42" cy="4" r="4" fill="#D4A64A"/>
+    <ellipse cx="42" cy="100" rx="40" ry="80" fill={paint}/>
+    <ellipse cx="42" cy="100" rx="35" ry="74" fill="none" stroke={trim} stroke-width="2" stroke-dasharray="3 5"/>
+    <ellipse cx="42" cy="100" rx="28" ry="64" fill="#4A2E1A" stroke="#D4A64A" stroke-width="2.5"/>
+    <ellipse cx="42" cy="100" rx="25" ry="60" fill="url(#mir)" opacity={m}/>
+    <path d="M30 178 Q42 194 54 178 Z" fill={paint}/>
+  </svg>
+)}
+{shape === 'small' && (
+  <svg viewBox="0 0 100 170" aria-hidden="true" focusable="false">
+    <path d="M8 120 V48 Q8 22 50 6 Q92 22 92 48 V120 Z" fill={paint}/>
+    <path d="M14 116 V50 Q14 28 50 13 Q86 28 86 50 V116 Z" fill="none" stroke={trim} stroke-width="2" stroke-dasharray="4 4"/>
+    <path d="M22 114 V54 Q22 36 50 24 Q78 36 78 54 V114 Z" fill="#4A2E1A" stroke="#D4A64A" stroke-width="2.5"/>
+    <path d="M25 111 V56 Q25 40 50 28 Q75 40 75 56 V111 Z" fill="url(#mir)" opacity={m}/>
+    <rect x="0" y="118" width="100" height="10" rx="2" fill={shade}/><rect x="0" y="118" width="100" height="3" fill="#D4A64A"/>
+    <path d="M30 128 H70 L56 150 H44 Z" fill={shade}/>
+    <path d="M74 118 C70 112 72 106 78 108 C84 104 90 110 86 116 Z" fill="#5E9C4A"/>
+    <path d="M80 128 C86 138 78 148 84 160" stroke="#4F8540" stroke-width="2" fill="none"/><ellipse cx="84" cy="138" rx="6" ry="4" fill="#5E9C4A"/><ellipse cx="79" cy="150" rx="6" ry="4" fill="#4F8540"/><ellipse cx="85" cy="162" rx="6" ry="4" fill="#5E9C4A"/>
+  </svg>
+)}

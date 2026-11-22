@@ -1,0 +1,27 @@
+---
+// Inlines one of the illustrated scenes from src/scenes/ (lifted from the mockup).
+// fade: soften the edges into the room's background, as in the mockup.
+const scenes = import.meta.glob('../scenes/*.svg', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+
+interface Props {
+  name: string;
+  fade?: 'soft' | 'door' | false;
+  class?: string;
+}
+const { name, fade = false, class: className } = Astro.props;
+const svg = scenes[`../scenes/${name}.svg`];
+if (!svg) throw new Error(`Scene not found: ${name}`);
+---
+<div class:list={['scene', fade && `scene--fade-${fade}`, className]} set:html={svg} />
+
+<style>
+  .scene > :global(svg) { display: block; width: 100%; height: auto; }
+  .scene--fade-soft > :global(svg) {
+    -webkit-mask-image: radial-gradient(ellipse 74% 70% at 50% 50%, #000 58%, transparent 100%);
+    mask-image: radial-gradient(ellipse 74% 70% at 50% 50%, #000 58%, transparent 100%);
+  }
+  .scene--fade-door > :global(svg) {
+    -webkit-mask-image: radial-gradient(ellipse 62% 70% at 50% 50%, #000 52%, transparent 98%);
+    mask-image: radial-gradient(ellipse 62% 70% at 50% 50%, #000 52%, transparent 98%);
+  }
+</style>

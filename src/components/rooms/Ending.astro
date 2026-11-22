@@ -1,0 +1,48 @@
+---
+// The Ending: the haveli's carved door open onto mountains at dusk.
+import Scene from '../Scene.astro';
+import { site } from '../../data/site.js';
+---
+<section id="contact" aria-labelledby="contact-title" class="ending">
+  <div class="ending__inner">
+    <div class="ending__text">
+      <span class="urdu ending__urdu" lang="ur" dir="rtl">خدا حافظ</span>
+      <h2 id="contact-title" class="ending__title">Thank you for walking through.</h2>
+      <p class="ending__intro">The door is open. If you're building a GRC programme, a SOC, or something in between, I'd love to hear about it.</p>
+      <p class="ending__open">Open to GRC and SOC opportunities</p>
+      <div class="ending__actions">
+        <a class="btn btn-mustard" href={`mailto:${site.email}`}>Email me</a>
+        <a class="btn ending__cv" href={site.cv} download>Download CV</a>
+      </div>
+      <p class="ending__links">
+        <a class="mono" href={`mailto:${site.email}`}>{site.email}</a>
+        <a href={site.linkedin} rel="noopener">LinkedIn</a>
+      </p>
+    </div>
+    <div class="ending__door">
+      <Scene name="door" fade="door" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .ending { background: var(--dusk); color: var(--paper); }
+  .ending__inner { max-width: 1440px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; }
+  .ending__text {
+    flex: 1 1 380px; min-width: 0;
+    padding: 48px var(--gutter) 48px clamp(var(--gutter), 4vw, 56px);
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .ending__urdu { font-size: 28px; color: var(--mustard); text-align: left; }
+  .ending__title { font-size: clamp(38px, 6vw, 54px); line-height: 1.05; }
+  .ending__intro { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 22px; line-height: 1.45; color: var(--dusk-text); }
+  .ending__open { margin: 0; font-weight: 700; color: var(--mint-soft); }
+  .ending__actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 6px; }
+  .ending__cv { border-color: var(--paper); color: var(--paper); }
+  .ending__cv:hover { background: var(--paper); color: var(--ink); }
+  .ending__links { margin: 0; display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 15px; }
+  .ending__links a { color: var(--mint-soft); overflow-wrap: anywhere; }
+  .ending__links a:hover { color: var(--paper); }
+  .ending__door { flex: 1.5 1 520px; min-width: 0; }
+  @media (max-width: 600px) { .ending__door { flex-basis: 100%; } }
+</style>

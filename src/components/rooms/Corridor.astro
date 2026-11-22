@@ -1,0 +1,254 @@
+---
+// The Corridor: a wall of carved frames around a big mirror.
+// Hover, focus or tap a frame and the big mirror shows its details.
+import { getCollection } from 'astro:content';
+import RoomHead from '../RoomHead.astro';
+import Scene from '../Scene.astro';
+import Frame from '../Frame.astro';
+import AssetImage from '../AssetImage.astro';
+import SubHead from '../SubHead.astro';
+
+const byOrder = (a: any, b: any) => a.data.order - b.data.order;
+const certs = (await getCollection('certifications')).sort(byOrder);
+const cves = (await getCollection('cves')).sort(byOrder);
+const certById = Object.fromEntries(certs.map((c) => [c.id, c]));
+const cveById = Object.fromEntries(cves.map((c) => [c.id, c]));
+
+// Frame positions on the wall: [left, top, width, height] in % (from the mockup).
+type Slot = { id: string; shape: 'niche' | 'rect' | 'oval' | 'small'; box: number[]; paint: string; shade: string; trim: string; cert?: string; cve?: string };
+const slots: Slot[] = [
+  { id: 'Ltop', shape: 'niche', box: [18.12, 4.65, 6.88, 28.14], paint: '#D9A21B', shade: '#B9850F', trim: '#FBE7A8', cert: 'htb-cdsa' },
+  { id: 'Rtop', shape: 'niche', box: [75.0, 4.65, 6.88, 28.14], paint: '#3F7A64', shade: '#2F5D50', trim: '#BFE0D2', cert: 'iso27001-lead-auditor' },
+  { id: 'Lrect', shape: 'rect', box: [5.62, 15.12, 9.62, 26.86], paint: '#D77F93', shade: '#B9617A', trim: '#FBE0E7', cve: 'CVE-2026-112339' },
+  { id: 'Rrect', shape: 'rect', box: [84.75, 15.12, 9.62, 26.86], paint: '#3B4F7D', shade: '#2B3A5E', trim: '#C8D3EE', cve: 'CVE-2026-66874' },
+  { id: 'Loval', shape: 'oval', box: [29.38, 30.47, 5.75, 24.3], paint: '#8FC1AC', shade: '#6FA592', trim: '#EAF6F0', cert: 'iso27701-lead-auditor' },
+  { id: 'Roval', shape: 'oval', box: [64.88, 30.47, 5.75, 24.3], paint: '#C0623A', shade: '#9E4A28', trim: '#F6D3C2', cert: 'secops-cbtp' },
+  { id: 'Lsmall', shape: 'small', box: [18.12, 58.14, 6.88, 21.74], paint: '#3B4F7D', shade: '#2B3A5E', trim: '#C8D3EE', cert: 'secops-cap' },
+  { id: 'Rsmall', shape: 'small', box: [75.0, 58.14, 6.88, 21.74], paint: '#D9A21B', shade: '#B9850F', trim: '#FBE7A8', cert: 'cisco-cyber-threat-management' },
+  { id: 'Lbottom', shape: 'niche', box: [6.88, 54.65, 6.88, 28.14], paint: '#C0623A', shade: '#9E4A28', trim: '#F6D3C2', cert: 'skillfront-iso27001-associate' },
+  { id: 'Rbottom', shape: 'niche', box: [86.25, 54.65, 6.88, 28.14], paint: '#D77F93', shade: '#B9617A', trim: '#FBE0E7' },
+];
+// Where the badge sits inside each shape: centre x, centre y, diameter (as % of the frame box)
+const badgeSpot = {
+  niche: { x: 50, y: 56.4, d: 50 },
+  rect: { x: 50, y: 56.2, d: 44 },
+  oval: { x: 50, y: 52.6, d: 54 },
+  small: { x: 50, y: 42.4, d: 48 },
+};
+const label = (s: Slot) => {
+  if (s.cert) return `${certById[s.cert].data.name}, ${certById[s.cert].data.issuer}`;
+  if (s.cve) return `${s.cve}, ${cveById[s.cve].data.product}`;
+  return 'Empty mirror, waiting for the next certificate';
+};
+---
+<section id="corridor" aria-labelledby="corridor-title" class="corridor">
+  <RoomHead id="corridor-title" urdu="راہداری" title="The Corridor" intro="Certificates and CVE credits, framed on the wall. Hover a frame and the big mirror tells its story." />
+
+  <div class="wall-scroll" data-wall>
+    <div class="wall">
+      <Scene name="corridor-wall" class="wall__bg" />
+
+      <!-- what the big mirror shows -->
+      <div class="mirror" aria-live="polite">
+        <p class="mirror__hint" data-panel="none">Hover a frame,<br />and the mirror<br />will tell its story.</p>
+
+        {slots.filter((s) => s.cert).map((s) => {
+          const c = certById[s.cert!].data;
+          return (
+            <article class="mirror__card" data-panel={s.id} hidden>
+              {c.certificate ? (
+                <AssetImage src={c.certificate} alt={`${c.name} certificate`} width={220} class="mirror__img" />
+              ) : (
+                <AssetImage src={c.badge!} alt={`${c.name} badge`} width={90} class="mirror__img mirror__img--badge" />
+              )}
+              <span class="mirror__kicker">{c.issuer}</span>
+              <h3 class="mirror__title">{c.name}</h3>
+              <span class="mirror__meta">Issued {c.issued}{c.validUntil && ` · valid until ${c.validUntil}`}</span>
+              {c.credentialId && <span class="mirror__id mono">ID {c.credentialId}</span>}
+              {c.verifyUrl ? (
+                <a class="mirror__link" href={c.verifyUrl} rel="noopener">Verify →</a>
+              ) : c.verifyNote && <span class="mirror__meta">Verify on the {c.verifyNote}</span>}
+            </article>
+          );
+        })}
+
+        {slots.filter((s) => s.cve).map((s) => {
+          const v = cveById[s.cve!];
+          return (
+            <article class="mirror__card" data-panel={s.id} hidden>
+              <span class="mirror__kicker">Security advisory · {v.data.date}</span>
+              <h3 class="mirror__title">{v.id} ({v.data.product})</h3>
+              <span class="mirror__meta">{v.data.severity}</span>
+              <span class="mirror__id mono">{v.data.ghsa}</span>
+              <a class="mirror__link" href={v.data.url} rel="noopener">Read the advisory →</a>
+            </article>
+          );
+        })}
+      </div>
+
+      <!-- the frames -->
+      {slots.map((s) => {
+        const [l, t, w, h] = s.box;
+        const b = badgeSpot[s.shape];
+        const c = s.cert ? certById[s.cert].data : null;
+        return (
+          <button
+            type="button"
+            class="frame"
+            data-slot={s.id}
+            data-empty={!s.cert && !s.cve ? 'true' : undefined}
+            aria-pressed="false"
+            aria-label={label(s)}
+            style={`left:${l}%;top:${t}%;width:${w}%;height:${h}%`}
+          >
+            <Frame shape={s.shape} paint={s.paint} shade={s.shade} trim={s.trim} empty={!s.cert && !s.cve} />
+            {(c || s.cve) && (
+              <span class="frame__badge" style={`left:${b.x}%;top:${b.y}%;width:${b.d}%`} aria-hidden="true">
+                {c && c.badge && <AssetImage src={c.badge} alt="" width={64} />}
+                {c && !c.badge && c.certificate && <AssetImage src={c.certificate} alt="" width={96} class="frame__crop" />}
+                {s.cve && <span class="frame__cve">CVE</span>}
+              </span>
+            )}
+          </button>
+        );
+      })}
+    </div>
+  </div>
+  <p class="wall-hint">Swipe sideways to see the whole wall.</p>
+
+  <div class="wrap corridor__cves">
+    <SubHead title="Security research and disclosures" level={3} />
+    <ul class="cves">
+      {cves.map((v) => (
+        <li class="cve">
+          <div class="cve__head">
+            <span class="cve__id mono">{v.id}</span>
+            <span class="cve__product">{v.data.product}</span>
+          </div>
+          <span class="cve__meta">{v.data.ghsa} · {v.data.severity} · {v.data.date}</span>
+          <p class="cve__desc">{v.data.description}</p>
+          <a href={v.data.url} rel="noopener">Read the advisory →</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .corridor { background: var(--paper-deep); padding-bottom: 96px; }
+
+  .wall-scroll { overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+  .wall { position: relative; min-width: 1000px; max-width: 1440px; margin: 0 auto; aspect-ratio: 1600 / 860; }
+  .wall__bg { position: absolute; inset: 0; }
+  .wall__bg :global(svg) { width: 100%; height: 100%; border-radius: 24px; }
+  .wall-hint { display: none; text-align: center; font-size: 14px; color: var(--ink-muted); margin: 8px 0 0; }
+  @media (max-width: 1000px) { .wall-hint { display: block; } }
+
+  /* the big mirror's glass area */
+  .mirror {
+    position: absolute;
+    left: 41.9%; top: 18.6%; width: 16.2%; height: 38%;
+    padding: 6px 4px;
+    display: flex; flex-direction: column; justify-content: center;
+    overflow: hidden;
+  }
+  .mirror__hint {
+    margin: 0;
+    text-align: center;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(16px, 1.35vw, 19px);
+    line-height: 1.3;
+    color: #2E4450;
+  }
+  .mirror__card {
+    background: rgba(251, 244, 230, 0.95);
+    border-radius: 6px;
+    padding: 8px 10px 10px;
+    display: flex; flex-direction: column; gap: 3px;
+    max-height: 100%;
+    overflow: auto;
+    animation: mirror-in 0.3s ease both;
+  }
+  .mirror__card[hidden] { display: none; }
+  @keyframes mirror-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .mirror__card { animation: none; } }
+  .mirror__card :global(.mirror__img) { display: block; width: 100%; height: auto; border-radius: 3px; margin-bottom: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+  .mirror__card :global(.mirror__img--badge) { width: 64px; margin: 0 auto 4px; box-shadow: none; }
+  .mirror__kicker { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--ink-muted); }
+  .mirror__title { font-size: clamp(15px, 1.25vw, 18px); font-weight: 700; line-height: 1.12; color: var(--ink); }
+  .mirror__meta { font-size: 11.5px; line-height: 1.35; color: var(--ink-soft); }
+  .mirror__id { font-size: 10.5px; color: var(--ink-muted); word-break: break-all; }
+  .mirror__link { font-size: 12.5px; font-weight: 700; }
+
+  /* frames */
+  .frame {
+    position: absolute;
+    padding: 0; margin: 0;
+    background: transparent; border: 0;
+    cursor: pointer;
+    z-index: 2;
+    filter: drop-shadow(0 6px 8px rgba(60, 40, 20, 0.25));
+    transition: transform 0.35s ease, filter 0.35s ease;
+  }
+  .frame :global(svg) { display: block; width: 100%; height: 100%; overflow: visible; }
+  .frame:hover, .frame:focus-visible { transform: translateY(-3px); }
+  .frame[aria-pressed='true'] {
+    z-index: 5;
+    transform: translateY(-4px) scale(1.04);
+    filter: drop-shadow(0 0 10px rgba(255, 205, 90, 0.95)) drop-shadow(0 6px 10px rgba(60, 40, 20, 0.3));
+  }
+  .frame:focus-visible { outline: 3px solid var(--mustard-deep); outline-offset: 4px; }
+  .frame__badge {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #FBF4E6;
+    border: 2px solid #E7C873;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .frame__badge :global(img) { width: 88%; height: 88%; object-fit: contain; display: block; }
+  .frame__badge :global(img.frame__crop) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; }
+  .frame__cve { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--ink); color: var(--mustard); font-weight: 700; font-size: clamp(11px, 1.1vw, 16px); }
+  @media (prefers-reduced-motion: reduce) { .frame { transition: none; } }
+
+  /* CVE list */
+  .corridor__cves { padding-top: 56px; display: flex; flex-direction: column; gap: 20px; }
+  .cves { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 20px; }
+  .cve { background: #FBF7EE; border: 1px solid var(--paper-line); border-left: 6px solid var(--ink); border-radius: 14px; padding: 22px 24px; display: flex; flex-direction: column; gap: 6px; }
+  .cve__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
+  .cve__id { font-weight: 700; font-size: 16px; }
+  .cve__product { font-family: var(--font-display); font-size: 24px; font-weight: 600; }
+  .cve__meta { font-size: 14px; font-weight: 700; color: var(--pine); }
+  .cve__desc { margin: 0; color: var(--ink-soft); }
+  .cve a { font-weight: 700; }
+</style>
+
+<script>
+  // Mirror wall: hovering, focusing or tapping a frame shows its story in the big mirror.
+  const wall = document.querySelector<HTMLElement>('[data-wall]');
+  if (wall) {
+    const frames = wall.querySelectorAll<HTMLButtonElement>('.frame');
+    const panels = wall.querySelectorAll<HTMLElement>('[data-panel]');
+    const show = (id: string) => {
+      frames.forEach((f) => f.setAttribute('aria-pressed', String(f.dataset.slot === id)));
+      let found = false;
+      panels.forEach((p) => {
+        const on = p.dataset.panel === id;
+        p.hidden = !on;
+        if (on) found = true;
+      });
+      // empty mirrors (no panel) bring back the hint
+      if (!found) panels.forEach((p) => (p.hidden = p.dataset.panel !== 'none'));
+    };
+    frames.forEach((f) => {
+      const pick = () => show(f.dataset.slot || 'none');
+      f.addEventListener('mouseenter', pick);
+      f.addEventListener('focus', pick);
+      f.addEventListener('click', pick);
+    });
+  }
+</script>
