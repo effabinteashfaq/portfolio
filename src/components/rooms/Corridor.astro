@@ -18,15 +18,15 @@ const cveById = Object.fromEntries(cves.map((c) => [c.id, c]));
 // Frame positions on the wall: [left, top, width, height] in % (from the mockup).
 type Slot = { id: string; shape: 'niche' | 'rect' | 'oval' | 'small'; box: number[]; paint: string; shade: string; trim: string; cert?: string; cve?: string };
 const slots: Slot[] = [
-  { id: 'Ltop', shape: 'niche', box: [18.12, 4.65, 6.88, 28.14], paint: '#D9A21B', shade: '#B9850F', trim: '#FBE7A8', cert: 'htb-cdsa' },
-  { id: 'Rtop', shape: 'niche', box: [75.0, 4.65, 6.88, 28.14], paint: '#3F7A64', shade: '#2F5D50', trim: '#BFE0D2', cert: 'iso27001-lead-auditor' },
+  { id: 'Ltop', shape: 'niche', box: [18.12, 4.65, 6.88, 28.14], paint: '#D9A21B', shade: '#B9850F', trim: '#FBE7A8', cert: 'iso27701-lead-auditor' },
+  { id: 'Rtop', shape: 'niche', box: [75.0, 4.65, 6.88, 28.14], paint: '#3F7A64', shade: '#2F5D50', trim: '#BFE0D2', cert: 'skillfront-iso27001-associate' },
   { id: 'Lrect', shape: 'rect', box: [5.62, 15.12, 9.62, 26.86], paint: '#D77F93', shade: '#B9617A', trim: '#FBE0E7', cve: 'CVE-2026-112339' },
   { id: 'Rrect', shape: 'rect', box: [84.75, 15.12, 9.62, 26.86], paint: '#3B4F7D', shade: '#2B3A5E', trim: '#C8D3EE', cve: 'CVE-2026-66874' },
-  { id: 'Loval', shape: 'oval', box: [29.38, 30.47, 5.75, 24.3], paint: '#8FC1AC', shade: '#6FA592', trim: '#EAF6F0', cert: 'iso27701-lead-auditor' },
-  { id: 'Roval', shape: 'oval', box: [64.88, 30.47, 5.75, 24.3], paint: '#C0623A', shade: '#9E4A28', trim: '#F6D3C2', cert: 'secops-cbtp' },
+  { id: 'Loval', shape: 'oval', box: [29.38, 30.47, 5.75, 24.3], paint: '#8FC1AC', shade: '#6FA592', trim: '#EAF6F0', cert: 'htb-cdsa' },
+  { id: 'Roval', shape: 'oval', box: [64.88, 30.47, 5.75, 24.3], paint: '#C0623A', shade: '#9E4A28', trim: '#F6D3C2', cert: 'iso27001-lead-auditor' },
   { id: 'Lsmall', shape: 'small', box: [18.12, 58.14, 6.88, 21.74], paint: '#3B4F7D', shade: '#2B3A5E', trim: '#C8D3EE', cert: 'secops-cap' },
-  { id: 'Rsmall', shape: 'small', box: [75.0, 58.14, 6.88, 21.74], paint: '#D9A21B', shade: '#B9850F', trim: '#FBE7A8', cert: 'cisco-cyber-threat-management' },
-  { id: 'Lbottom', shape: 'niche', box: [6.88, 54.65, 6.88, 28.14], paint: '#C0623A', shade: '#9E4A28', trim: '#F6D3C2', cert: 'skillfront-iso27001-associate' },
+  { id: 'Rsmall', shape: 'small', box: [75.0, 58.14, 6.88, 21.74], paint: '#D9A21B', shade: '#B9850F', trim: '#FBE7A8', cert: 'secops-cbtp' },
+  { id: 'Lbottom', shape: 'niche', box: [6.88, 54.65, 6.88, 28.14], paint: '#C0623A', shade: '#9E4A28', trim: '#F6D3C2', cert: 'cisco-cyber-threat-management' },
   { id: 'Rbottom', shape: 'niche', box: [86.25, 54.65, 6.88, 28.14], paint: '#D77F93', shade: '#B9617A', trim: '#FBE0E7' },
 ];
 // Where the badge sits inside each shape: centre x, centre y, diameter (as % of the frame box)
