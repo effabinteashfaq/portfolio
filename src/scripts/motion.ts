@@ -84,7 +84,7 @@ if ('IntersectionObserver' in window) {
     gustTimer = window.setTimeout(() => {
       gust.classList.remove('is-playing');
       playing = false;
-    }, 3400);
+    }, 3500);
   };
 
   const breezeIO = new IntersectionObserver(

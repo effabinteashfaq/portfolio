@@ -25,11 +25,12 @@ const sets = Array.from({ length: variants }, (_, v) => {
   const rand = makeRand(1009 + v * 7919);
   const between = (lo: number, hi: number) => lo + rand() * (hi - lo);
   const leafList = Array.from({ length: leaves }, (_, i) => {
-    const dur = Math.round(between(2600, 3100));
+    const dur = Math.round(between(2800, 3200));
     const x = between(-8, 30);                     // vw: some leaves are already in the air
-    const end = between(78, 118);                  // vw: where it has drifted to as it fades
+    const end = between(72, 105);                  // vw: where it has drifted to as it fades
     return {
       x: x.toFixed(1),
+      tf: Math.max(0, 30 - x).toFixed(1),            // vw to the 30% mark: covered fast
       tx: (end - x).toFixed(1),
       colour: colours[(i * 5 + v * 3) % colours.length],
       size: Math.round(between(30, 62)),
@@ -62,7 +63,7 @@ const sets = Array.from({ length: variants }, (_, v) => {
         <span class="mist" style={`top:${m.y}vh;width:${m.w}vw;height:${m.h}vh;--dur:${m.dur}ms;--delay:${m.delay}ms;--peak:${m.peak}`}></span>
       ))}
       {set.leafList.map((l) => (
-        <span class="gleaf" style={`top:${l.y}vh;left:${l.x}vw;--tx:${l.tx}vw;--dy:${l.dy}vh;--dur:${l.dur}ms;--delay:${l.delay}ms`}>
+        <span class="gleaf" style={`top:${l.y}vh;left:${l.x}vw;--tf:${l.tf}vw;--tx:${l.tx}vw;--dy:${l.dy}vh;--dur:${l.dur}ms;--delay:${l.delay}ms`}>
           <span class="gleaf__orbit" style={`--turns:${l.turns}deg`}>
             <span class="gleaf__arm" style={`--r:${l.radius}px`}>
               <svg class="gleaf__body" width={l.size} height={l.size} focusable="false"
@@ -113,13 +114,14 @@ const sets = Array.from({ length: variants }, (_, v) => {
   /* leaves: travel across the whole screen... */
   .gleaf {
     position: absolute;
-    /* strong ease-out: a quick gust in, then a slow drift */
-    animation: gleaf-cross var(--dur) cubic-bezier(0.12, 0.72, 0.28, 1) var(--delay) both;
+    /* fast across the left 30% of the screen, then a slow drift across the other 70% */
+    animation: gleaf-cross var(--dur) linear var(--delay) both;
     will-change: transform, opacity;
   }
   @keyframes gleaf-cross {
-    0%   { transform: translate(0, 0); opacity: 0; }
+    0%   { transform: translate(0, 0); opacity: 0; animation-timing-function: cubic-bezier(0.3, 0.6, 0.7, 0.9); }
     4%   { opacity: 1; }
+    10%  { transform: translate(var(--tf), calc(var(--dy) * 0.2)); animation-timing-function: cubic-bezier(0.3, 0.3, 0.6, 1); }
     62%  { opacity: 1; }
     100% { transform: translate(var(--tx), var(--dy)); opacity: 0; }
   }
