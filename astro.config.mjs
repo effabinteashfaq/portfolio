@@ -6,6 +6,10 @@ import rehypeMermaidCache from './src/plugins/rehype-mermaid-cache.mjs';
 export default defineConfig({
   output: 'static',
   trailingSlash: 'ignore',
+  build: {
+    // put the CSS inside each page: no extra round trips before the first paint
+    inlineStylesheets: 'always',
+  },
   vite: {
     build: {
       // keep scripts as separate files (never inlined into the page), so the
