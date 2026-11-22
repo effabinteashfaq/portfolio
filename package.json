@@ -4,12 +4,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "prepare-assets": "node scripts/prepare-assets.mjs",
+    "prepare-assets": "node scripts/prepare-assets.mjs && node scripts/render-mermaid.mjs",
     "predev": "npm run prepare-assets",
     "dev": "astro dev",
     "prebuild": "npm run prepare-assets",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "fresh": "astro dev stop; rm -rf .astro node_modules/.astro node_modules/.vite dist && npm run dev -- --host --port 4321"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.10",
@@ -22,6 +23,7 @@
     "node": ">=22.23.4"
   },
   "devDependencies": {
-    "axe-core": "^4.14.1"
+    "axe-core": "^4.14.1",
+    "mermaid": "^12.3.0"
   }
 }

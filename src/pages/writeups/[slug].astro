@@ -1,6 +1,7 @@
 ---
-// One page per writeup. Basic version for step 2; book-page styling,
-// colourful headings and Mermaid diagrams arrive in step 6.
+// One page per writeup, styled like a page from the book on the Library shelf:
+// a cream page with a spine and ribbon bookmark in the book's cover colour,
+// bold headings in alternating palette colours, wide tables and diagrams.
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 
@@ -12,54 +13,202 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+const { title, tag, excerpt, coverColor, date } = entry.data;
+const darken = (hex: string, f = 0.75) => {
+  const n = parseInt(hex.slice(1), 16);
+  return '#' + [n >> 16, (n >> 8) & 255, n & 255].map((v) => Math.round(v * f).toString(16).padStart(2, '0')).join('');
+};
+const when = date?.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 ---
-<Base title={`${entry.data.title} · Effa binte Ashfaq`} description={entry.data.excerpt} current="library">
-  <article class="writeup wrap">
+<Base title={`${title} · Effa binte Ashfaq`} description={excerpt} current="library">
+  <div class="book-wrap">
     <p class="writeup__nav"><a class="writeup__back" href="/#library">← Back to the Library</a></p>
-    <p class="writeup__tag">{entry.data.tag}</p>
-    <div class="writeup__body">
-      <Content />
-    </div>
-    <p class="writeup__nav"><a class="writeup__back" href="/#library">← Back to the Library</a></p>
-  </article>
+
+    <article class="page" style={`--cover:${coverColor};--spine:${darken(coverColor)}`}>
+      <span class="page__ribbon" aria-hidden="true"></span>
+      <p class="page__meta">
+        <span class="page__tag">{tag}</span>
+        {when && <time datetime={date!.toISOString().slice(0, 10)}>{when}</time>}
+      </p>
+      <div class="writeup__body">
+        <Content />
+      </div>
+      <p class="page__end" aria-hidden="true">❦</p>
+    </article>
+
+    <p class="writeup__nav writeup__nav--end"><a class="writeup__back" href="/#library">← Back to the Library</a></p>
+  </div>
 </Base>
 
 <style>
-  /* Text stays at a comfortable reading width; tables, code, figures and
-     diagrams spread wider so nothing has to scroll on a laptop. */
-  .writeup { max-width: 1160px; padding-top: 40px; padding-bottom: 80px; }
-  .writeup__nav, .writeup__tag, .writeup__body > :global(*) { max-width: 720px; margin-left: auto; margin-right: auto; }
-  .writeup__nav { margin-top: 0; margin-bottom: 0; }
+  .book-wrap {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 32px var(--gutter) 88px;
+  }
+  .writeup__nav { max-width: 760px; margin: 0 auto 20px; }
+  .writeup__nav--end { margin-top: 28px; margin-bottom: 0; }
   .writeup__back { font-weight: 700; }
-  .writeup__tag {
-    margin-top: 28px; margin-bottom: 0;
-    font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+
+  /* ---- the page ---- */
+  .page {
+    position: relative;
+    background: #FCF8EF;
+    border-left: 14px solid var(--spine);
+    border-radius: 4px 14px 14px 4px;
+    padding: clamp(28px, 5vw, 64px) clamp(20px, 5vw, 64px) clamp(28px, 4vw, 48px);
+    /* a soft shadow and a faint stack of pages behind */
+    box-shadow:
+      4px 4px 0 #F1E8D6,
+      8px 8px 0 #E8DCC5,
+      0 24px 50px rgba(60, 40, 20, 0.14);
+  }
+  /* ribbon bookmark in the cover colour */
+  .page__ribbon {
+    position: absolute;
+    top: -6px;
+    right: clamp(24px, 6vw, 72px);
+    width: 26px;
+    height: 84px;
+    background: var(--cover);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
+  }
+  .page__meta {
+    max-width: 720px;
+    margin: 0 auto 6px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;
+    font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
     color: var(--ink-muted);
   }
-  .writeup__body :global(h1) { font-size: clamp(34px, 6vw, 48px); line-height: 1.1; margin-top: 8px; margin-bottom: 24px; }
-  .writeup__body :global(h2) { font-size: 32px; margin-top: 40px; margin-bottom: 12px; }
-  .writeup__body :global(h3) { font-size: 25px; margin-top: 28px; margin-bottom: 8px; }
+  .page__tag { background: var(--cover); color: #FFFFFF; padding: 4px 12px; border-radius: 999px; letter-spacing: 1.2px; }
+  .page__end { text-align: center; margin: 40px 0 0; font-size: 26px; color: var(--spine); }
 
-  /* wide elements */
+  /* ---- reading column; wide things spread to the full page ---- */
+  .writeup__body > :global(*) { max-width: 720px; margin-left: auto; margin-right: auto; }
   .writeup__body > :global(.table-wrap),
   .writeup__body > :global(pre),
-  .writeup__body > :global(p:has(> img)),
-  .writeup__body > :global(figure) { max-width: 1120px; }
-  .writeup__body :global(img) { display: block; height: auto; margin: 0 auto; max-width: 100%; }
-  .writeup__body :global(.table-wrap) { overflow-x: auto; margin-top: 24px; margin-bottom: 24px; }
-  .writeup__body :global(table) { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.5; }
-  .writeup__body :global(th), .writeup__body :global(td) { border: 1px solid var(--paper-line); padding: 10px 12px; vertical-align: top; text-align: left; }
-  .writeup__body :global(th) { background: var(--paper-deep); }
+  .writeup__body > :global(figure),
+  .writeup__body > :global(p:has(> img)) { max-width: 100%; }
+  .writeup__body {
+    font-size: 18px;
+    line-height: 1.75;
+    color: #2E3448;
+  }
+  .writeup__body :global(p) { margin-top: 0; margin-bottom: 1.1em; }
+
+  /* ---- headings: bold, in alternating palette colours ---- */
+  .writeup__body :global(h1) {
+    font-weight: 700;
+    font-size: clamp(34px, 5.5vw, 50px);
+    line-height: 1.1;
+    color: var(--ink);
+    margin-top: 6px;
+    margin-bottom: 18px;
+  }
+  .writeup__body :global(h2) {
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 34px);
+    line-height: 1.15;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    color: var(--h2, #2F5D50);
+  }
+  .writeup__body :global(h2::after) {
+    content: '';
+    display: block;
+    width: 56px;
+    height: 3px;
+    margin-top: 8px;
+    border-radius: 2px;
+    background: currentColor;
+    opacity: 0.55;
+  }
+  .writeup__body :global(h2:nth-of-type(4n + 1)) { --h2: #2F5D50; } /* pine */
+  .writeup__body :global(h2:nth-of-type(4n + 2)) { --h2: #B5562F; } /* rust */
+  .writeup__body :global(h2:nth-of-type(4n + 3)) { --h2: #A94C6B; } /* wildflower pink */
+  .writeup__body :global(h2:nth-of-type(4n + 4)) { --h2: #3B4F7D; } /* ink blue */
+  .writeup__body :global(h3) {
+    font-weight: 700;
+    font-size: clamp(22px, 3vw, 26px);
+    line-height: 1.2;
+    margin-top: 1.6em;
+    margin-bottom: 0.4em;
+  }
+  .writeup__body :global(h3:nth-of-type(odd)) { color: #8A6512; }  /* deep mustard */
+  .writeup__body :global(h3:nth-of-type(even)) { color: #3A735F; } /* green */
+
+  /* ---- text details ---- */
+  .writeup__body :global(strong) { color: var(--ink); }
+  .writeup__body :global(a) { color: var(--pine); text-underline-offset: 3px; }
+  .writeup__body :global(a:hover) { color: var(--ink); }
+  .writeup__body :global(ul), .writeup__body :global(ol) { padding-left: 1.4em; margin-bottom: 1.2em; }
+  .writeup__body :global(li) { margin-bottom: 0.4em; }
+  .writeup__body :global(li::marker) { color: #B5562F; }
+  .writeup__body :global(blockquote) {
+    border-left: 4px solid var(--mustard-deep);
+    margin: 1.4em auto;
+    padding: 0.2em 0 0.2em 1.2em;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.2em;
+    color: var(--ink-soft);
+  }
+  .writeup__body :global(code) { font-family: var(--font-mono); font-size: 0.88em; }
+  .writeup__body :global(:not(pre) > code) { background: #F1E6D3; padding: 0.1em 0.35em; border-radius: 4px; }
+  .writeup__body :global(hr) { border: 0; text-align: center; margin: 2.2em auto; }
+  .writeup__body :global(hr::before) { content: '· · ·'; color: var(--spine); letter-spacing: 0.6em; font-size: 20px; }
+
+  /* ---- images and their italic captions ---- */
+  .writeup__body :global(p:has(> img)) { margin-top: 1.6em; margin-bottom: 0.5em; }
+  .writeup__body :global(img) {
+    display: block; height: auto; max-width: 100%; margin: 0 auto;
+    border-radius: 8px; background: #FFFFFF;
+    box-shadow: 0 6px 18px rgba(60, 40, 20, 0.1);
+  }
+  .writeup__body :global(p:has(> img) + p:has(> em:only-child)) {
+    text-align: center; font-size: 15px; color: var(--ink-muted); margin-bottom: 1.6em;
+  }
+
+  /* ---- diagrams (drawn at build time from ```mermaid blocks) ---- */
+  .writeup__body :global(figure.diagram) {
+    margin: 1.6em auto 0.4em;
+    padding: 20px;
+    background: #FFFFFF;
+    border: 1px solid var(--paper-line);
+    border-radius: 12px;
+    display: flex; justify-content: center;
+    overflow-x: auto;
+  }
+  .writeup__body :global(figure.diagram svg) { width: 100%; height: auto; }
+  .writeup__body :global(figure.diagram:focus-visible) { outline: 3px solid var(--mustard-deep); outline-offset: 3px; }
+  .writeup__body :global(figure.diagram + p:has(> em:only-child)) {
+    text-align: center; font-size: 15px; color: var(--ink-muted); margin-bottom: 1.6em;
+  }
+
+  /* ---- tables ---- */
+  .writeup__body :global(.table-wrap) { overflow-x: auto; margin-top: 1.6em; margin-bottom: 1.6em; border-radius: 10px; border: 1px solid var(--paper-line); }
+  .writeup__body :global(.table-wrap:focus-visible) { outline: 3px solid var(--mustard-deep); outline-offset: 3px; }
+  .writeup__body :global(table) { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.5; background: #FFFDF8; }
+  .writeup__body :global(th), .writeup__body :global(td) { padding: 10px 14px; vertical-align: top; text-align: left; border-bottom: 1px solid var(--paper-line); }
+  .writeup__body :global(th) { background: #F3E9D8; color: var(--ink); font-weight: 700; }
+  .writeup__body :global(tr:nth-child(even) td) { background: #FBF5E9; }
+  .writeup__body :global(tr:last-child td) { border-bottom: 0; }
+
+  /* ---- code blocks ---- */
   .writeup__body :global(pre) {
-    background: var(--paper-deep);
     padding: 16px 18px;
-    border-radius: 8px;
+    border-radius: 10px;
     white-space: pre-wrap;        /* long commands wrap instead of scrolling */
     overflow-wrap: anywhere;
     font-size: 14px;
   }
+
   @media (max-width: 640px) {
-    .writeup__body :global(table) { font-size: 14px; }
-    .writeup__body :global(table) { min-width: 560px; }   /* very wide tables may still swipe on phones */
+    .page { border-left-width: 8px; box-shadow: 3px 3px 0 #F1E8D6, 0 14px 30px rgba(60, 40, 20, 0.12); }
+    .writeup__body { font-size: 17px; }
+    .writeup__body :global(table) { font-size: 14px; min-width: 560px; }   /* very wide tables swipe on phones */
+    .writeup__body :global(figure.diagram) { padding: 10px; justify-content: flex-start; }
+    .writeup__body :global(figure.diagram svg) { min-width: 520px; }   /* readable text; swipe to see it all */
   }
 </style>
