@@ -58,7 +58,7 @@ The lattice paper card links to the Library writeup "Lattice Cryptography Withou
 ### Experience (newest first), with one-liners
 - **GRC Intern**, Haumaru Whānau (remote), Jul 2026 – Sep 2026
   Translated ISO 27001, PCI DSS and Saudi regulations into controls, policies and audit-ready evidence.
-- **GRC Analyst**, National CERT Pakistan, May 2025 – Aug 2025
+- **GRC Analyst**, National CERT Pakistan, Jun 2025 – Aug 2025
   From audit checklists to stakeholder dashboards: national-standard GRC work across 15+ institutions.
 
 AUCSS Research Club Lead sits in Community, not Experience (Effa's call; replaces the earlier brief decision).

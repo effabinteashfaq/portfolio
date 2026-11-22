@@ -1,7 +1,9 @@
 # Corridor: CVE frame. Heading: "Security research and disclosures"
+# logo: name of a file in src/logos/ shown in the CVE's mirror frame
 - id: CVE-2026-112339
   order: 1
   product: Wazuh
+  logo: wazuh
   ghsa: GHSA-v8ww-qhjh-j6w9
   severity: Moderate, CVSS 5.9
   date: Nov 2026
@@ -11,6 +13,7 @@
 - id: CVE-2026-66874
   order: 2
   product: Gitea
+  logo: gitea
   ghsa: GHSA-5xp7-r6cr-39ff
   severity: Moderate, CVSS 6.5
   date: Aug 2026

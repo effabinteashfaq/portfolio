@@ -1,0 +1,4 @@
+# Official logos, used to show which product each CVE belongs to.
+# gitea.svg: go-gitea/gitea assets/logo.svg (MIT licence).
+# wazuh.svg: wazuh/wazuh-dashboard-plugins plugins/main/public/assets/images/themes/light/logo.svg.
+# Cleaned with SVGO (no scripts, ids prefixed). Logos remain trademarks of their owners.

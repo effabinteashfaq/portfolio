@@ -13,6 +13,9 @@ const byOrder = (a: any, b: any) => a.data.order - b.data.order;
 const certs = (await getCollection('certifications')).sort(byOrder);
 const cves = (await getCollection('cves')).sort(byOrder);
 const certById = Object.fromEntries(certs.map((c) => [c.id, c]));
+// product logos for the CVE frames (src/logos/*.svg, official files cleaned with SVGO)
+const logos = import.meta.glob('../../logos/*.svg', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const logoSvg = (name?: string) => (name ? logos[`../../logos/${name}.svg`]?.replace('<svg ', '<svg aria-hidden="true" focusable="false" ') : undefined);
 const cveById = Object.fromEntries(cves.map((c) => [c.id, c]));
 
 // Frame positions on the wall: [left, top, width, height] in % (from the mockup).
@@ -116,7 +119,9 @@ const label = (s: Slot) => {
               >
                 {c && c.badge && <AssetImage src={c.badge} alt="" width={96} />}
                 {c && !c.badge && <span class="frame__cve frame__cve--iso">27001</span>}
-                {s.cve && <span class="frame__cve">CVE</span>}
+                {s.cve && (logoSvg(cveById[s.cve].data.logo)
+                  ? <span class="frame__logo" set:html={logoSvg(cveById[s.cve].data.logo)} />
+                  : <span class="frame__cve">CVE</span>)}
               </span>
             )}
           </button>
@@ -343,6 +348,10 @@ const label = (s: Slot) => {
   .frame__badge--plate { border-radius: 50%; border: 2px solid #E7C873; overflow: hidden; background: #FBF4E6; }
   /* SkillFront has no badge: a lettered plate in the mockup's ISO style */
   .frame__cve.frame__cve--iso { background: var(--pine); color: var(--paper); font-size: clamp(8px, 0.85vw, 12.5px); }
+  /* CVE frames: the product's logo on a round white plate */
+  .frame__badge--plate:has(.frame__logo) { background: #FFFFFF; }
+  .frame__logo { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 14% 7%; }
+  .frame__logo :global(svg) { width: 100%; height: auto; max-height: 100%; display: block; }
   .frame__cve { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--ink); color: var(--mustard); font-weight: 700; font-size: clamp(11px, 1.1vw, 16px); }
   @media (prefers-reduced-motion: reduce) { .frame { transition: none; } }
 

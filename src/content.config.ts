@@ -105,6 +105,7 @@ const cves = defineCollection({
     date: z.string(),
     url: z.string().url(),
     description: z.string(),
+    logo: z.string().optional(),   // file name in src/logos/, shown in the mirror frame
   }),
 });
 
