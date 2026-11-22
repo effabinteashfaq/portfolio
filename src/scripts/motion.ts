@@ -74,7 +74,7 @@ if ('IntersectionObserver' in window) {
     // the next room's heading rises as the mist clears
     const head = threshold.nextElementSibling?.querySelector<HTMLElement>(':scope > .rise:not(.is-risen)');
     if (head) {
-      head.style.transitionDelay = '700ms';
+      head.style.transitionDelay = '500ms';
       head.classList.add('is-risen');
       riseIO.unobserve(head);
       window.setTimeout(() => (head.style.transitionDelay = ''), 1600);
@@ -84,7 +84,7 @@ if ('IntersectionObserver' in window) {
     gustTimer = window.setTimeout(() => {
       gust.classList.remove('is-playing');
       playing = false;
-    }, 2500);
+    }, 3400);
   };
 
   const breezeIO = new IntersectionObserver(

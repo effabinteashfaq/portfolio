@@ -1,6 +1,7 @@
 ---
 // The autumn breeze: a slow, full-screen gust of mist and chinar leaves that
-// swirl in loops across the page (about 2 seconds), then clear to reveal the next room.
+// swirl in loops across the page: a quick gust in, then a slow drift as they fade
+// (about 3 seconds), while the mist clears to reveal the next room.
 // Rendered once per page; src/scripts/motion.ts plays it at each threshold.
 // Three variants (different leaves and mist) are cycled so doorways differ.
 
@@ -24,17 +25,18 @@ const sets = Array.from({ length: variants }, (_, v) => {
   const rand = makeRand(1009 + v * 7919);
   const between = (lo: number, hi: number) => lo + rand() * (hi - lo);
   const leafList = Array.from({ length: leaves }, (_, i) => {
-    const dur = Math.round(between(1600, 2000));
-    const x = between(-6, 34);                     // vw: some leaves are already in the air
+    const dur = Math.round(between(2600, 3100));
+    const x = between(-8, 30);                     // vw: some leaves are already in the air
+    const end = between(78, 118);                  // vw: where it has drifted to as it fades
     return {
       x: x.toFixed(1),
-      tx: (110 - x + between(0, 10)).toFixed(1),     // vw travelled, always off the right edge
+      tx: (end - x).toFixed(1),
       colour: colours[(i * 5 + v * 3) % colours.length],
       size: Math.round(between(30, 62)),
       y: between(4, 88).toFixed(1),                  // vh, where it enters
       dy: Math.round(between(-14, 18)),              // vh it rises or falls while crossing
       dur,
-      delay: Math.round(between(0, 220)),
+      delay: Math.round(between(0, 180)),
       radius: Math.round(between(30, 120)),          // size of its loops, px
       turns: Math.round(between(300, 820)) * (rand() < 0.5 ? -1 : 1), // degrees of looping
       spin: Math.round(between(200, 540)) * (rand() < 0.4 ? -1 : 1),
@@ -45,8 +47,8 @@ const sets = Array.from({ length: variants }, (_, v) => {
     y: between(-10, 70).toFixed(1),                  // vh
     w: Math.round(between(70, 115)),                 // vw
     h: Math.round(between(35, 65)),                  // vh
-    dur: Math.round(between(1800, 2200)),
-    delay: Math.round(between(0, 200)),
+    dur: Math.round(between(2600, 3000)),
+    delay: Math.round(between(0, 150)),
     peak: between(0.55, 0.85).toFixed(2),
   }));
   return { leafList, mist };
@@ -87,9 +89,9 @@ const sets = Array.from({ length: variants }, (_, v) => {
     position: absolute; inset: 0;
     background: rgba(251, 246, 236, 0.32);
     opacity: 0;
-    animation: veil 2000ms ease-in-out both;
+    animation: veil 2800ms ease-out both;
   }
-  @keyframes veil { 0% { opacity: 0; } 35% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes veil { 0% { opacity: 0; } 14% { opacity: 1; } 100% { opacity: 0; } }
 
   /* mist: soft drifts rolling in from the left */
   .mist {
@@ -98,32 +100,33 @@ const sets = Array.from({ length: variants }, (_, v) => {
     border-radius: 50%;
     background: radial-gradient(closest-side, rgba(255, 251, 242, 0.95), rgba(255, 251, 242, 0.55) 45%, rgba(255, 251, 242, 0) 100%);
     opacity: 0;
-    animation: mist-roll var(--dur) cubic-bezier(0.3, 0.1, 0.4, 1) var(--delay) both;
+    animation: mist-roll var(--dur) cubic-bezier(0.1, 0.75, 0.3, 1) var(--delay) both;
     will-change: transform, opacity;
   }
   @keyframes mist-roll {
     0%   { transform: translateX(0) scale(0.9); opacity: 0; }
-    30%  { opacity: var(--peak); }
-    65%  { opacity: calc(var(--peak) * 0.8); }
-    100% { transform: translateX(150vw) scale(1.15); opacity: 0; }
+    12%  { opacity: var(--peak); }
+    45%  { opacity: calc(var(--peak) * 0.75); }
+    100% { transform: translateX(130vw) scale(1.2); opacity: 0; }
   }
 
   /* leaves: travel across the whole screen... */
   .gleaf {
     position: absolute;
-    animation: gleaf-cross var(--dur) cubic-bezier(0.35, 0.15, 0.55, 0.9) var(--delay) both;
+    /* strong ease-out: a quick gust in, then a slow drift */
+    animation: gleaf-cross var(--dur) cubic-bezier(0.12, 0.72, 0.28, 1) var(--delay) both;
     will-change: transform, opacity;
   }
   @keyframes gleaf-cross {
     0%   { transform: translate(0, 0); opacity: 0; }
-    5%   { opacity: 1; }
-    90%  { opacity: 1; }
+    4%   { opacity: 1; }
+    62%  { opacity: 1; }
     100% { transform: translate(var(--tx), var(--dy)); opacity: 0; }
   }
   /* ...while circling around a moving centre, which draws loops and swirls */
   .gleaf__orbit {
     position: absolute;
-    animation: gleaf-orbit var(--dur) ease-in-out var(--delay) both;
+    animation: gleaf-orbit var(--dur) cubic-bezier(0.2, 0.6, 0.35, 1) var(--delay) both;
   }
   @keyframes gleaf-orbit { from { transform: rotate(0deg); } to { transform: rotate(var(--turns)); } }
   .gleaf__arm { position: absolute; transform: translateX(var(--r)); }
@@ -132,7 +135,7 @@ const sets = Array.from({ length: variants }, (_, v) => {
     display: block;
     max-width: none;   /* the moving boxes around a leaf have no width of their own */
     overflow: visible;
-    animation: gleaf-flutter var(--dur) ease-in-out var(--delay) both;
+    animation: gleaf-flutter var(--dur) cubic-bezier(0.2, 0.6, 0.35, 1) var(--delay) both;
   }
   @keyframes gleaf-flutter {
     0%   { transform: rotate(0deg) scaleX(1); }
