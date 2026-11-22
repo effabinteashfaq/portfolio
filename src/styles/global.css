@@ -154,3 +154,13 @@ h1, h2, h3, h4 {
 .btn-outline { border-color: currentColor; color: var(--ink); }
 .btn-mustard { background: var(--mustard); color: var(--ink); }
 .btn-mustard:hover { background: var(--mustard-deep); color: var(--ink); }
+
+/* ------------------------------------------------------------------
+   Rooms rise in (added by src/scripts/motion.ts; never with reduced motion)
+------------------------------------------------------------------- */
+.rise { opacity: 0; transform: translateY(28px); }
+.rise.is-risen {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.8s ease, transform 0.9s cubic-bezier(0.2, 0.65, 0.3, 1);
+}

@@ -1,7 +1,8 @@
 ---
 // The doorway between two rooms: a colour fade, the patchwork strip and
-// an "onward to" line. The chinar leaf breeze is added here in step 4.
+// an "onward to" line, with chinar leaves blowing across once.
 import Patchwork from './Patchwork.astro';
+import ChinarLeaves from './ChinarLeaves.astro';
 
 interface Props {
   from: string;   // background colour of the room above
@@ -11,9 +12,12 @@ interface Props {
   next: string;   // English name of the next room, e.g. "the Study"
 }
 const { from, to, via, urdu, next } = Astro.props;
+// a stable number from the room name, so each doorway gets its own leaves
+const seed = [...next].reduce((n, ch) => (n * 31 + ch.charCodeAt(0)) >>> 0, 7);
 const fade = via ? `${from}, ${via}, ${to}` : `${from}, ${to}`;
 ---
-<div class="threshold" aria-hidden="true" style={`--fade:${fade}`}>
+<div class="threshold" aria-hidden="true" data-breeze style={`--fade:${fade}`}>
+  <ChinarLeaves seed={seed} />
   <Patchwork />
   <span class="threshold__line">onward to <span class="urdu" lang="ur" dir="rtl">{urdu}</span> · {next}</span>
 </div>

@@ -9,12 +9,14 @@ import Workshop from '../components/rooms/Workshop.astro';
 import Library from '../components/rooms/Library.astro';
 import BeyondScreen from '../components/rooms/BeyondScreen.astro';
 import Ending from '../components/rooms/Ending.astro';
+import ChinarSprite from '../components/ChinarSprite.astro';
 ---
 <Base
   home
   title="Effa binte Ashfaq"
   description="Effa binte Ashfaq, Security Researcher and GRC Analyst in Islamabad. A walk through the haveli: research, experience, certifications, projects and writeups."
 >
+  <ChinarSprite />
   <Courtyard />
   <Threshold from="var(--paper)" to="var(--night)" urdu="مطالعہ" next="the Study" />
   <Study />
@@ -30,3 +32,7 @@ import Ending from '../components/rooms/Ending.astro';
   <Threshold from="var(--paper)" to="var(--dusk)" urdu="دروازہ" next="the door" />
   <Ending />
 </Base>
+
+<script>
+  import '../scripts/motion.ts';
+</script>
