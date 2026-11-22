@@ -1,7 +1,6 @@
 ---
 // Courtyard (hero): name, stage name, role, intro, Now line, and Beyond the Screen.
 import Scene from '../Scene.astro';
-import SubHead from '../SubHead.astro';
 import { site } from '../../data/site.js';
 ---
 <section id="courtyard" aria-labelledby="courtyard-title" class="courtyard">
@@ -13,7 +12,8 @@ import { site } from '../../data/site.js';
         <p class="mono hero__aka">aka 3FFYP4CK</p>
       </div>
       <p class="hero__role">Security Researcher &amp; GRC Analyst</p>
-      <p class="hero__intro">I work where policy meets the logs. On the GRC side, that means reading standards closely, mapping controls and finding the gaps before an auditor does. On the blue team side, it means digging through alerts, timelines and memory dumps to see what really happened. My favourite moment is when both sides tell the same story. Away from the screen, I paint, chase mountain light with my camera, and never say no to a good paratha.</p>
+      <p class="hero__lead">I work where policy meets the logs.</p>
+      <p class="hero__intro">On the GRC side, that means reading standards closely, mapping controls and finding the gaps before an auditor does. On the blue team side, it means digging through alerts, timelines and memory dumps to see what really happened. <em class="hero__fav">My favourite moment is when both sides tell the same story.</em> Away from the screen, I paint, chase mountain light with my camera, and never say no to a good paratha.</p>
       <p class="hero__now"><b>Now:</b> Masters in Information Security at MCS, NUST</p>
       <div class="hero__actions">
         <a class="btn btn-ink" href="#study">Walk through the haveli ↓</a>
@@ -29,34 +29,9 @@ import { site } from '../../data/site.js';
     </figure>
   </div>
 
-  <div class="wrap">
-    <div class="beyond" aria-labelledby="beyond-title" role="region">
-      <div class="beyond__text">
-        <SubHead id="beyond-title" level={2} title="Beyond the Screen" urdu="شوق" />
-        <p class="beyond__intro">System crashed? Recovery involves colours, mountains and a paratha.</p>
-        <p class="beyond__line">Geometric paintings at home, mountain photographs on the road. Turns out I like patterns everywhere.</p>
-      </div>
-      <svg class="beyond__art" viewBox="0 0 240 120" aria-hidden="true" focusable="false">
-        <!-- a small geometric painting beside a mountain photograph -->
-        <rect x="4" y="10" width="100" height="100" fill="#F6F0E4" stroke="#E7C873" stroke-width="4"/>
-        <rect x="14" y="20" width="40" height="40" fill="#2F8A4E"/><path d="M14 20 L54 60 M54 20 L14 60" stroke="#F3D27A" stroke-width="3"/>
-        <rect x="54" y="20" width="40" height="40" fill="#D9A21B"/><path d="M74 24 L90 40 L74 56 L58 40 Z" fill="#A8322A"/>
-        <rect x="14" y="60" width="40" height="40" fill="#E0457B"/><path d="M34 64 L50 80 L34 96 L18 80 Z" fill="#2F8A4E"/>
-        <rect x="54" y="60" width="40" height="40" fill="#3B4F7D"/><path d="M58 70 l9 -6 l9 6 l9 -6 l9 6 M58 82 l9 -6 l9 6 l9 -6 l9 6 M58 94 l9 -6 l9 6 l9 -6 l9 6" stroke="#F3D27A" stroke-width="2.5" fill="none"/>
-        <rect x="128" y="24" width="108" height="80" fill="#FFFFFF" transform="rotate(4 182 64)"/>
-        <g transform="rotate(4 182 64)">
-          <rect x="134" y="30" width="96" height="58" fill="#7FB9DD"/>
-          <path d="M134 78 L156 52 L170 64 L190 40 L214 66 L230 56 V88 H134 Z" fill="#2E6AA3"/>
-          <path d="M190 40 L183 49 L192 47 L197 52 Z" fill="#F6F0E4"/>
-          <path d="M134 82 C160 76 200 80 230 74 V88 H134 Z" fill="#3F7A64"/>
-        </g>
-      </svg>
-    </div>
-  </div>
 </section>
 
 <style>
-  .courtyard { padding-bottom: 32px; }
   .hero {
     padding-top: 56px;
     padding-bottom: 48px;
@@ -78,7 +53,23 @@ import { site } from '../../data/site.js';
     text-transform: uppercase;
     color: var(--pine);
   }
+  .hero__lead {
+    margin: 4px 0 0;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(26px, 3.4vw, 32px);
+    line-height: 1.3;
+    color: var(--ink);
+  }
   .hero__intro { margin: 0; max-width: 560px; color: var(--ink-soft); }
+  .hero__fav {
+    font-family: var(--font-display);
+    font-size: 1.2em;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--pine);
+  }
   .hero__now { margin: 0; font-size: 16px; color: var(--ink-soft); }
   .hero__now b { color: var(--ink); }
   .hero__actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 4px; }
@@ -87,27 +78,4 @@ import { site } from '../../data/site.js';
   .hero__figure { flex: 1 1 380px; min-width: 0; margin: 0; display: flex; justify-content: center; }
   .hero__figure .scene { width: 100%; max-width: 460px; }
 
-  .beyond {
-    background: var(--ink);
-    color: var(--paper);
-    border-radius: 24px;
-    padding: 36px clamp(20px, 4vw, 48px);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px 48px;
-    --subhead-urdu: var(--mustard);
-  }
-  .beyond__text { flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
-  .beyond__intro {
-    margin: 0;
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: 23px;
-    line-height: 1.4;
-    color: var(--mustard);
-  }
-  .beyond__line { margin: 0; color: var(--dusk-text); max-width: 560px; }
-  .beyond__art { flex: 0 1 260px; width: 260px; height: auto; }
 </style>

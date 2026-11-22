@@ -7,6 +7,7 @@ import Veranda from '../components/rooms/Veranda.astro';
 import Corridor from '../components/rooms/Corridor.astro';
 import Workshop from '../components/rooms/Workshop.astro';
 import Library from '../components/rooms/Library.astro';
+import BeyondScreen from '../components/rooms/BeyondScreen.astro';
 import Ending from '../components/rooms/Ending.astro';
 ---
 <Base
@@ -25,6 +26,7 @@ import Ending from '../components/rooms/Ending.astro';
   <Workshop />
   <Threshold from="var(--paper)" via="#F1E6D3" to="var(--paper)" urdu="کتاب گھر" next="the Library" />
   <Library />
+  <BeyondScreen />
   <Threshold from="var(--paper)" to="var(--dusk)" urdu="دروازہ" next="the door" />
   <Ending />
 </Base>

@@ -35,9 +35,9 @@ const benchAccents = ['#2F5D50', '#3B4F7D', '#C0623A', '#C8961E'];
     <Scene name="workshop" fade="soft" />
   </div>
 
-  <!-- The toolkit -->
+  <!-- Hunar (the toolkit) -->
   <div class="wrap workshop__block">
-    <SubHead title="The toolkit" urdu="اوزار" english="Skills" />
+    <SubHead title="Hunar" urdu="ہنر" english="Skills" />
     <div class="toolkit">
       {skills.map((s) => {
         const [bg, ink] = tagTint[s.id] ?? ['#EEE', '#333'];
@@ -121,7 +121,8 @@ const benchAccents = ['#2F5D50', '#3B4F7D', '#C0623A', '#C8961E'];
   .workshop__block { padding-top: 64px; display: flex; flex-direction: column; gap: 24px; }
   .workshop__block--last { padding-bottom: 96px; }
 
-  .toolkit { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 22px; }
+  /* two cards per row on wide screens, so the cards are wide and short */
+  .toolkit { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(440px, 100%), 1fr)); gap: 22px; }
   .tool {
     background: #FBF7EE;
     border: 1px solid var(--paper-line);
