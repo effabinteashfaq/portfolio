@@ -146,6 +146,9 @@ const prefix = home ? '' : '/';
     .room-bar__rooms::-webkit-scrollbar { display: none; }
     .room-bar__rooms a { padding: 8px 12px; }
   }
+  @media (pointer: coarse) {
+    .room-bar__motion { min-height: 44px; min-width: 44px; justify-content: center; }
+  }
   /* small phones: the motion button shows just its leaf (its name is still read out) */
   @media (max-width: 480px) {
     .room-bar__motion { padding: 6px 10px; }

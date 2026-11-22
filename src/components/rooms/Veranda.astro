@@ -5,6 +5,7 @@ import RoomHead from '../RoomHead.astro';
 import SubHead from '../SubHead.astro';
 import Scene from '../Scene.astro';
 import ZoomImage from '../ZoomImage.astro';
+import ViewToggle from '../ViewToggle.astro';
 
 const byOrder = (a: any, b: any) => a.data.order - b.data.order;
 const experience = (await getCollection('experience')).sort(byOrder);
@@ -15,7 +16,10 @@ const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 <section id="veranda" aria-labelledby="veranda-title" class="veranda">
   <RoomHead id="veranda-title" urdu="برآمدہ" title="The Veranda" intro="Where the work happens with other people: jobs, teams, the society, and the odd paper garland." />
 
-  <div class="wrap veranda__block">
+  <div class="wrap"><ViewToggle fancy="veranda-fancy" list="veranda-list" back="Back to the Veranda" /></div>
+
+  <div id="veranda-fancy">
+  <div class="wrap veranda__block veranda__block--first">
     <SubHead title="Tajurba" urdu="تجربہ" english="Experience" />
     <div class="jobs">
       {experience.map((e, i) => (
@@ -56,11 +60,36 @@ const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
       <Scene name="gallery-wall" />
     </div>
   </div>
+  </div>
+
+  <div id="veranda-list" class="wrap veranda__block veranda__block--first plain-list" hidden>
+    <h3>Experience</h3>
+    <ul>
+      {experience.map((e) => (
+        <li>
+          <strong>{e.data.role}</strong>, {e.data.org}{e.data.location && ` (${e.data.location})`}
+          <span class="plain-list__meta">{e.data.dates}</span>
+          <p>{e.data.line}</p>
+        </li>
+      ))}
+    </ul>
+    <h3>Community</h3>
+    <ul>
+      {community.map((c) => (
+        <li>
+          <strong>{c.data.role}</strong>, {c.data.where}
+          <span class="plain-list__meta">{c.data.dates}</span>
+          <p>{c.data.line}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
 </section>
 
 <style>
   .veranda { background: var(--paper); padding-bottom: 96px; }
   .veranda__block { padding-top: 64px; display: flex; flex-direction: column; gap: 24px; }
+  .veranda__block--first { padding-top: 8px; }
 
   .jobs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 24px; }
   .job {

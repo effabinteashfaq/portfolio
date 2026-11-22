@@ -7,6 +7,7 @@ import SubHead from '../SubHead.astro';
 import Marker from '../Marker.astro';
 import AssetImage from '../AssetImage.astro';
 import ZoomImage from '../ZoomImage.astro';
+import ViewToggle from '../ViewToggle.astro';
 import mcsPostcard from '../../../assets/figures/mcs-postcard.svg?raw';
 
 const byOrder = (a: any, b: any) => a.data.order - b.data.order;
@@ -19,12 +20,15 @@ const dressing: Record<string, { city: string; ink: string; tilt: number }> = {
   'bs-cybersecurity': { city: 'Islamabad', ink: '#3B4F7D', tilt: -0.6 },
   'ms-information-security': { city: 'Rawalpindi', ink: '#2F6B3F', tilt: 0.6 },
 };
-const interestColours = ['#3B4F7D', '#3F7A64', '#8C3B4E', '#9E4A28', '#5B4A82'];
+const interestColours = ['#3B4F7D', '#3A735F', '#8C3B4E', '#9E4A28', '#5B4A82'];
 const kicker = (p: any) => [p.data.status, p.data.venue, p.data.date].filter(Boolean).join(' · ');
 ---
 <section id="study" aria-labelledby="study-title" class="study">
   <RoomHead dark id="study-title" urdu="مطالعہ" title="The Study" intro="Late nights, a lantern, and papers that took longer than planned." />
 
+  <div class="wrap study__toggle"><ViewToggle fancy="study-fancy" list="study-list" back="Back to the Study" /></div>
+
+  <div id="study-fancy">
   <div class="study__scene">
     <Scene name="study" fade="soft" />
   </div>
@@ -107,6 +111,34 @@ const kicker = (p: any) => [p.data.status, p.data.venue, p.data.date].filter(Boo
       ))}
     </ul>
   </div>
+  </div>
+
+  <div id="study-list" class="wrap study__block study__block--last plain-list" hidden>
+    <h3>Degrees</h3>
+    <ul>
+      {degrees.map((d) => (
+        <li>
+          <strong>{d.data.degree}</strong>, {d.data.school}, {d.data.years}
+          <p>{d.data.line}</p>
+        </li>
+      ))}
+    </ul>
+    <h3>Research</h3>
+    <ul>
+      {papers.map((p) => (
+        <li>
+          <strong>{p.data.title}</strong>
+          <span class="plain-list__meta">{kicker(p)}{p.data.award && ` · ${p.data.award}`}</span>
+          <p>{p.data.line}</p>
+          {p.data.writeup && <a href={`/writeups/${p.data.writeup}/`}>Read it in the Library →</a>}
+        </li>
+      ))}
+    </ul>
+    <h3>What keeps me up at night</h3>
+    <ul>
+      {interests.map((i) => <li>{i.data.name}</li>)}
+    </ul>
+  </div>
 
 </section>
 
@@ -120,6 +152,8 @@ const kicker = (p: any) => [p.data.status, p.data.venue, p.data.date].filter(Boo
   .study__scene { max-width: 1440px; margin: 0 auto; }
   .study__block { padding-top: 64px; display: flex; flex-direction: column; gap: 26px; }
   .study__block--last { padding-bottom: 96px; }
+  .study__toggle :global(.view-toggle__btn) { background: transparent; color: var(--paper); border-color: var(--paper); }
+  .study__toggle :global(.view-toggle__btn:hover) { background: var(--paper); color: var(--ink); }
 
   /* Postcards */
   .postcard {

@@ -235,6 +235,12 @@ const STILL = 'Still being written';
 
   .library__covers { padding-top: 72px; display: flex; flex-direction: column; gap: 30px; scroll-margin-top: var(--bar-height); }
   .covers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); gap: 32px 26px; }
+  /* phones: two books per row so the covers stay book-sized */
+  @media (max-width: 560px) {
+    .covers { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 16px; }
+    .book__title { font-size: 20px; }
+    .book__cover { padding: 12px; border-left-width: 8px; }
+  }
   .book { text-decoration: none; color: var(--ink); display: flex; flex-direction: column; gap: 10px; }
   .book__cover {
     aspect-ratio: 2 / 3;
