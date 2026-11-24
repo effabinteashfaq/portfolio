@@ -1,11 +1,11 @@
 ---
-title: "From Clearing HTB CDSA to Teaching Blue Team Security: A Journey from Learning to Leading"
+title: "My CDSA Journey"
 tag: "Blue team"
 excerpt: "Six months of Windows event logs, one 2:30 AM exam submission, and a workshop where I taught what once confused me."
 coverColor: "#1D7573"
 order: 1
 ---
-# From Clearing HTB CDSA to Teaching Blue Team Security: A Journey from Learning to Leading
+# My CDSA Journey
 
 There is something particularly rewarding about returning to a subject
 you once struggled with, except this time, you are the one standing in

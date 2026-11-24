@@ -1,12 +1,12 @@
 ---
-title: "Lattice Cryptography Without the Heavy Maths"
+title: "Lattice Crypto, Minus the Maths"
 date: 2026-11-22
 tag: "Research"
 excerpt: "Rows of trees, noisy equations and why quantum computers can't shortcut either. Post-quantum crypto, no maths required."
 coverColor: "#1F2A44"
 order: 3
 ---
-# Lattice Cryptography Without the Heavy Maths
+# Lattice Crypto, Minus the Maths
 
 *Effa binte Ashfaq · 22 November 2026*
 

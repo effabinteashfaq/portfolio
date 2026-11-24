@@ -1,12 +1,12 @@
 ---
-title: "One Control, Five Frameworks: ISO 27001, PCI DSS, PDPL, CRF and SAMA Side by Side"
+title: "One Control, Five Frameworks"
 date: 2026-11-22
 tag: "GRC"
 excerpt: "Five frameworks, five auditors, one access control. Here's how to stop doing the same work five times."
 coverColor: "#2F5D50"
 order: 2
 ---
-# One Control, Five Frameworks: ISO 27001, PCI DSS, PDPL, CRF and SAMA Side by Side
+# One Control, Five Frameworks
 
 *Effa binte Ashfaq · 22 November 2026*
 
